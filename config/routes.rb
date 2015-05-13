@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  # Informaton page with usage data
+  get 'info/index'
+  root 'info#index'
+
   # Routes for users
   get 'users' => 'users#index'
   get 'users/:user_id' => 'users#show'
