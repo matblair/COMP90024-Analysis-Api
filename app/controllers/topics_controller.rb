@@ -3,7 +3,7 @@ class TopicsController < ApplicationController
   include TopicRepresentor
 
   # Supported Topics and levels
-  SUPPORTED_TOPICS = ['guncontrol','immigration','unemployment']
+  SUPPORTED_TOPICS = ['gun_control','mention_immigration','unemployment']
   GRANULARITY_LEVELS = ['daily','weekly','monthly','yearly']
 
   # Before all find the topic params
@@ -16,10 +16,10 @@ class TopicsController < ApplicationController
 
   def show
     # Get couch request
-    couch_response = '@date_range'
-        
+    couch_response = Topics.get_topic @topic, @demographic, @date_range
+
     # Render json
-    render json: show_json(couch_response)
+    render json: show_json(@topic, couch_response)
   end
 
   def trend
@@ -54,11 +54,9 @@ class TopicsController < ApplicationController
 
   #Validate all the params
   def validate_date
-    params.require(:date_range)
-    @date_range = params[:date_range]
-    # if not(@date_range.has_key?('start_date') &&  @date_range.has_key?('end_date'))
-    #   render json: {:error => "Must include start and end date."}, status: :unprocessable_entity
-    # end
+    if params.has_key?('start_date') &&  params.has_key?('end_date')
+      @date_range = {"start_date" => params[:start_date], "end_date" => params[:end_date]}
+    end
   end
 
   def validate_trend_params

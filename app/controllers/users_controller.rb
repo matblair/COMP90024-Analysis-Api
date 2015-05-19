@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 		user_id = params[:user_id]
 		# Get information from couch and neo4j
 		couch_info = {:dummy => "hello"}
-		graph_info = {:basic_stats => "sadasd"}
+		graph_info = {:basic_stats => "sadasd"} 
 
 		# Return structure
 		render json: user_show_json(couch_info, graph_info)

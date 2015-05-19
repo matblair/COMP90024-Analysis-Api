@@ -1,18 +1,20 @@
 module DemographicParser
-	extend ActiveSupport::Concern
+  extend ActiveSupport::Concern
 
-	ALLOWED_MARKERS = ['political_leaning', 'language','visitor']
+  ALLOWED_MARKERS = ['political_leaning', 'language','visitor']
 
-	def extract_demographic params
-		if params.has_key? 'demographic_markers'
-			# Extract demographic and check that it has valid options
-			demo = params['demographic_markers']
-			# Remove any keys not valid and return
-			demo.delete_if {|k,v| not ALLOWED_MARKERS.include? k }
-			return demo
-		else
-			return nil
-		end
-	end
+  def extract_demographic params
+    demo = {}
+    puts params
+    ALLOWED_MARKERS.each do |m|
+      if params.has_key? m
+        # Extract demographic and check that it has valid options
+        demo[m]=params[m]
+      end
+    end
+    puts demo
+    demo
+
+  end
 
 end

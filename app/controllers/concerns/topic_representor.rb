@@ -1,8 +1,27 @@
 module TopicRepresentor
 	extend ActiveSupport::Concern
 
-	def show_json response
-		JSON.parse '{"topic":"ALSKDJASL","popularity":"1000","sentiment":"0.9","subjectivity":"0.4","most_popular_language":"gb","least_popular_language":"en"}'
+	def show_json topic, response
+
+		sentiment = response[:sentiment]['value']
+		languages = response[:languages]['rows']
+
+		# Count languages
+		langs = Hash.new(0)
+		languages.each do |row|
+			langs[row['key'].last] = row['value']
+		end
+		# # Remove undefined
+		# langs.delete "und"
+		
+		{
+			topic: topic,
+			polarity: sentiment['polarity'],
+			subjectivity: sentiment['subjectivity'],
+			most_popular_language: langs.max.first,
+			least_popular_language: langs.min.first,
+			count: sentiment['count']
+		}
 	end
 
 	def trend_json response
