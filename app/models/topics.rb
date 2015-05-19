@@ -1,10 +1,24 @@
 class Topics < ActiveRecord::Base
 
-  DEFAULT_DATE = [{},{},{},{},{}]
-
-
   # GET /topics/:topic
   def self.get_topic topic, demographic=nil, date_range=nil
+    # Build start and end key
+    startkey, endkey = build_keys topic, demographic, date_range
+
+    # get sentiment summmary
+    sentiment = (Couchdb.make_request 'tweets', 'topic', 'analysis', {'startkey'=>startkey, 'endkey'=>endkey})['rows'].first
+  end
+
+  def self.get_languages topic, demographic=nil, date_range=nil
+    # Build start and end key
+    startkey, endkey = build_keys topic, demographic, date_range
+
+    # get language count
+    language = Couchdb.make_request 'tweets', 'topic', 'language_count', {'startkey'=>startkey, 'endkey'=>endkey, 'group'=>true}
+  end
+
+  private
+  def self.build_keys topic, demographic=nil, date_range=nil
     # Build start and end key
     startkey = []
     endkey = []
@@ -27,10 +41,10 @@ class Topics < ActiveRecord::Base
 
     # Build start and end date
     if date_range && (date_range.has_key? "start_date") && (date_range.has_key? "end_date")
+
       # Find the start key
       start_date = parse_date date_range["start_date"]
       end_date = parse_date date_range["end_date"]
-
       # Pad both things
       if startkey.count < 3
         (3-startkey.count).times { startkey << ""}
@@ -45,19 +59,12 @@ class Topics < ActiveRecord::Base
 
     # Fill in endkey
     if endkey.count < 8
-        (8-endkey.count).times { endkey << {}}
+      (8-endkey.count).times { endkey << {}}
     end
 
-    # get sentiment summmary
-    sentiment = (Couchdb.make_request 'tweets', 'topic', 'analysis', {'startkey'=>startkey, 'endkey'=>endkey})['rows'].first
-
-    # get language count
-    language = Couchdb.make_request 'tweets', 'topic', 'language_count', {'startkey'=>startkey, 'endkey'=>endkey, 'group'=>true}
-    puts language
-    {sentiment: sentiment, languages: language}
+    [startkey, endkey]
   end
 
-  private
   def self.parse_date date
     # Parse the date
     d = DateTime.parse(date)

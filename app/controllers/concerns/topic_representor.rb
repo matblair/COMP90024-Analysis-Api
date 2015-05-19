@@ -1,10 +1,10 @@
 module TopicRepresentor
 	extend ActiveSupport::Concern
 
-	def show_json topic, response
+	def show_json topic, sentiment, languages
 
-		sentiment = response[:sentiment]['value']
-		languages = response[:languages]['rows']
+		sentiment = sentiment['value']
+		languages = languages['rows']
 
 		# Count languages
 		langs = Hash.new(0)
@@ -14,14 +14,20 @@ module TopicRepresentor
 		# # Remove undefined
 		# langs.delete "und"
 		
-		{
+		response = {
 			topic: topic,
 			polarity: sentiment['polarity'],
 			subjectivity: sentiment['subjectivity'],
-			most_popular_language: langs.max.first,
-			least_popular_language: langs.min.first,
 			count: sentiment['count']
 		}
+		if langs.count >=1
+			response[:most_popular_language]=langs.max.first
+			response[:least_popular_language]=langs.min.first
+		else
+			response[:most_popular_language]=nil
+			response[:least_popular_language]=nil
+		end
+		response
 	end
 
 	def trend_json response

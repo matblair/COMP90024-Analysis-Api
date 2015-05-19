@@ -16,17 +16,72 @@ class TopicsController < ApplicationController
 
   def show
     # Get couch request
-    couch_response = Topics.get_topic @topic, @demographic, @date_range
-
+    sentiment = Topics.get_topic @topic, @demographic, @date_range
+    languages = Topics.get_languages @topic, @demographic, @date_range
     # Render json
-    render json: show_json(@topic, couch_response)
+    render json: show_json(@topic, sentiment, languages)
   end
 
   def trend
-    # Get couch request
-    couch_response = '@date_range'
+    # Work out day split
+    case @granularity
+    when 'daily'
+      @days = 1
+    when 'weekly'
+      @days = 7
+    when 'monthly'
+      @days = 30
+    when 'yearly'
+      @days = 365
+    end
+
+    # Responses
+    responses = []
+
+    # Go from start date to end date.
+    start = Date.parse @date_range['start_date']
+    finish = Date.parse @date_range['end_date']
+    puts start
+    # Collect all the things
+    while start < finish
+      # Make a request
+      enddate = start + @days.days
+      puts "should check for #{start} and #{enddate}"
+      response = (Topics.get_topic @topic, @demographic,{"start_date" => start.to_s, "end_date" => enddate.to_s})
+      if response
+        response = response['value']
+        responses << {'start' => start, 'end' => enddate, 'count' => response['count'],
+                      'subjectivity' => response['subjectivity'], 'polarity' => response['polarity']}
+      else
+        responses << {'start' => start, 'end' => enddate, 'count' => 0,
+                      'subjectivity' => nil, 'polarity' => nil}
+      end
+
+      start = enddate
+    end
+
+    puts responses
+    # Work out trend from start and end
+    polarities = responses.map {|e| e['polarity']}
+    polarities.delete nil
+    puts polarities.class
+    if polarities.first > polarities.last
+      if (polarities.first - polarities.last).abs > 0.5
+        trend = 'decreasing'
+      else
+        trend = 'stable'
+      end
+    else
+      if (polarities.first - polarities.last).abs > 0.5
+        trend = 'increasing'
+      else
+        trend = 'stable'
+      end
+    end
+
+
     # Render json
-    render json: trend_json(couch_response)
+    render json: {topic: @topic, trend: trend, time_periods: responses}
 
   end
 
