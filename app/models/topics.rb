@@ -65,6 +65,10 @@ class Topics < ActiveRecord::Base
     [startkey, endkey]
   end
 
+  def self.get_extremes topic, demographic=nil, date_range=nil
+    # Need to query for users
+    
+
   def self.parse_date date
     # Parse the date
     d = DateTime.parse(date)
