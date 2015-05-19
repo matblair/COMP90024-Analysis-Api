@@ -17,6 +17,7 @@ class TopicsController < ApplicationController
   def show
     # Get couch request
     couch_response = '@date_range'
+        
     # Render json
     render json: show_json(couch_response)
   end

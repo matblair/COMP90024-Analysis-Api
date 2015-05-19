@@ -15,9 +15,12 @@ Rails.application.routes.draw do
   # Routes for locations
   get 'locations' => 'locations#index'
   get 'locations/sentiment' => 'locations#sentiment'
+  get 'locations/users' => 'locations#users'
 
   # Routes for topics
   get 'topics/:topic' => 'topics#show'
   get 'topics/:topic/trend' => 'topics#trend'
   get 'topics/:topic/extremes' => 'topics#extremes'
+  get 'topics/:topic/locations' => 'topics#locations'
+  get 'topics/:topic/affluence' => 'topics#affluence'
 end
