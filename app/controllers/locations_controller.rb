@@ -39,6 +39,10 @@ class LocationsController < ApplicationController
 		render json: index_json(couch_response)
 	end
 
+	def users
+		location_range = Locations.get_users
+	end
+
 	private
 	# Find required index params
 	def validate_index_params

@@ -1,9 +1,11 @@
 class Locations < ActiveRecord::Base
 	#GET /locations
+	
 	#This doesn't work properly, don't know what input is needed for GET /locations
 	def self.get_location date, demographic=nil, period= nil#lat, long, date_range = nil
 		#startkey, endkey = build_keys lat, long, date_range
-		sentiment = (Couchdb.make_request 'tweets', 'location', 'loc_sentiment')['rows'].first
+		date = parse_date date
+		sentiment = (Couchdb.make_request 'tweets', 'location', 'sentiment')['rows']
 	end
 
 	#GET /locations/sentiment
@@ -15,8 +17,8 @@ class Locations < ActiveRecord::Base
 
 	#GET /locations/users
 	#This is not working either
-	def self.get_users user
-		location = (Couchdb.make_request 'tweets', 'topic')
+	def self.get_users 
+		location = (Couchdb.make_request 'tweets', 'location', 'loc_sentiment')
 	end
 	
 	private

@@ -23,4 +23,9 @@ Rails.application.routes.draw do
   get 'topics/:topic/extremes' => 'topics#extremes'
   get 'topics/:topic/locations' => 'topics#locations'
   get 'topics/:topic/affluence' => 'topics#affluence'
+
+  # Routes for emojis
+  get '/emoji/general' => 'emojis#top10'
+  get '/emoji/:emoji_code/locations' => 'emojis#location'
+
 end
