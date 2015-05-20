@@ -13,6 +13,11 @@ class HashtagsController < ApplicationController
 		render json: show_hashtag(couch_response)
 	end
 
+	def similar 
+		# Send the request to the graph api
+		
+	end
+
 	def trending
 		# Find mood if it exists
 		if params.has_key? 'mood'
