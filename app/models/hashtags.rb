@@ -1,21 +1,28 @@
-class Topics < ActiveRecord::Base
+class Hashtags
+  include DemographicParser
 
-  # GET /topics/:topic
-  def self.get_topic topic, demographic=nil, date_range=nil
-    # Build start and end key
-    startkey, endkey = build_keys topic, demographic, date_range
+  def self.stats tag, demographic
+  	# Find the start and end keys
+  	startkey, endkey = build_keys
 
-    # get sentiment summmary
-    sentiment = (Couchdb.make_request 'tweets', 'topic', 'analysis', {'startkey'=>startkey, 'endkey'=>endkey})['rows'].first
+  	# Get the hashtags
+  	tags = Couchdb.make_request 'tweets', 'hashtags', 'stats',  {'startkey'=>startkey, 'endkey'=>endkey, 'group'=>true, 'group_level'=>1}
+
+  	language = Couchdb.make_request 'tweets', 'topic', 'language_count', {'startkey'=>startkey, 'endkey'=>endkey, 'group'=>true, 'group_level'=>2}
+
   end
 
-  def self.get_languages topic, demographic=nil, date_range=nil
-    # Build start and end key
-    startkey, endkey = build_keys topic, demographic, date_range
+  def self.trending
 
-    # get language count
-    language = Couchdb.make_request 'tweets', 'topic', 'language_count', {'startkey'=>startkey, 'endkey'=>endkey, 'group'=>true}
+
   end
+
+
+  def self.topics
+
+
+  end
+
 
   private
   def self.build_keys topic, demographic=nil, date_range=nil
@@ -46,10 +53,10 @@ class Topics < ActiveRecord::Base
       start_date = parse_date date_range["start_date"]
       end_date = parse_date date_range["end_date"]
       # Pad both things
-      if startkey.count < 3
+      if startkey.count < 5
         (3-startkey.count).times { startkey << ""}
       end
-      if endkey.count < 3
+      if endkey.count < 5
         (3-endkey.count).times { endkey << {}}
       end
 
@@ -58,21 +65,12 @@ class Topics < ActiveRecord::Base
     end
 
     # Fill in endkey
-    if endkey.count < 8
-      (8-endkey.count).times { endkey << {}}
+    if endkey.count < 10
+      (10-endkey.count).times { endkey << {}}
     end
 
     [startkey, endkey]
   end
 
-  def self.get_extremes topic, demographic=nil, date_range=nil
-    # Need to query for users
-  end
 
-  def self.parse_date date
-    # Parse the date
-    d = DateTime.parse(date)
-    # Build json for that
-    date_array = [d.year, d.month, d.day, d.hour, d.minute]
-  end
 end
