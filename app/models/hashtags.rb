@@ -1,15 +1,15 @@
 class Hashtags
   include DemographicParser
 
-  def self.stats tag, demographic
+  def self.stats tag, demographic, date_range
   	# Find the start and end keys
-  	startkey, endkey = build_keys
+  	startkey, endkey = build_keys tag, demographic, date_range
 
   	# Get the hashtags
-  	tags = Couchdb.make_request 'tweets', 'hashtags', 'stats',  {'startkey'=>startkey, 'endkey'=>endkey, 'group'=>true, 'group_level'=>1}
+  	tags = Couchdb.make_request 'tweets', 'hashtag', 'stats',  {'startkey'=>startkey, 'endkey'=>endkey, 'group'=>true, 'group_level'=>1}
 
   	language = Couchdb.make_request 'tweets', 'topic', 'language_count', {'startkey'=>startkey, 'endkey'=>endkey, 'group'=>true, 'group_level'=>2}
-
+    tags
   end
 
   def self.trending
