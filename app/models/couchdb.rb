@@ -3,8 +3,8 @@ class Couchdb
   require 'net/http'
   require 'json'
 
-  COUCH_PORT = 20010
-  COUCH_IP = 'localhost'
+  COUCH_PORT = 5984
+  COUCH_IP = '144.6.227.66'
 
   def self.make_request database, design_doc, view, params = nil
 

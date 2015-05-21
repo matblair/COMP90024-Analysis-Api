@@ -30,14 +30,14 @@ class Topics < ActiveRecord::Base
       end
       if demographic.has_key? "language"
         if common.count < 2
-          common << ""
+          common << "aa"
         end
         common << demographic["language"]
       end
     end
 
     startkey = startkey.concat common
-    endkey = endkey.concat common.map{|e| e.eql?("") ? {} : e }
+    endkey = endkey.concat common.map{|e| e.eql?("aa") ? {} : e }
 
     # Build start and end date
     if date_range && (date_range.has_key? "start_date") && (date_range.has_key? "end_date")
@@ -47,7 +47,7 @@ class Topics < ActiveRecord::Base
       end_date = parse_date date_range["end_date"]
       # Pad both things
       if startkey.count < 3
-        (3-startkey.count).times { startkey << ""}
+        (3-startkey.count).times { startkey << "aa"}
       end
       if endkey.count < 3
         (3-endkey.count).times { endkey << {}}

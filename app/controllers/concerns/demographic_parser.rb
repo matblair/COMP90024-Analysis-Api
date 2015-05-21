@@ -1,7 +1,7 @@
 module DemographicParser
   extend ActiveSupport::Concern
 
-  ALLOWED_MARKERS = ['political_leaning', 'language','visitor']
+  ALLOWED_MARKERS = ['political_leaning', 'language']
 
   def extract_demographic params
     demo = {}
