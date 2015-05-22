@@ -1,4 +1,4 @@
-class Topics < ActiveRecord::Base
+class Topics
 
   # GET /topics/:topic
   def self.get_topic topic, demographic=nil, date_range=nil

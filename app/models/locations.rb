@@ -1,4 +1,4 @@
-class Locations < ActiveRecord::Base
+class Locations
   #GET /locations
 
   #This doesn't work properly, don't know what input is needed for GET /locations
