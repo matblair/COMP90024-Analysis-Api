@@ -7,13 +7,12 @@ Rails.application.routes.draw do
   get 'users' => 'users#index'
   get 'users/:user_id' => 'users#show'
   get 'users/:user_id/connections' => 'users#connections'
-  get 'users/demographics' => 'users#demographics'
 
   # Routes for hashtags
   get 'hashtags/trending' => 'hashtags#trending'
   get 'hashtags/stats/:hashtag' => 'hashtags#show'
   get 'hashtags/topics' => 'hashtags#topics'
-  get 'hashtags/:hashtag/similar' => 'hashtags#similarå'
+  get 'hashtags/stats/:hashtag/similar' => 'hashtags#similar'
 
   # Routes for locations
   get 'locations' => 'locations#index'
@@ -24,6 +23,7 @@ Rails.application.routes.draw do
   get 'topics/:topic/trend' => 'topics#trend'
   get 'topics/:topic/extremes' => 'topics#extremes'
   get 'topics/:topic/locations' => 'topics#locations'
+  get 'topics/:topic/languages' => 'topics#languages'
 
   # Routes for emojis
   get '/emoji/general' => 'emojis#top_ten'

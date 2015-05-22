@@ -2,6 +2,7 @@ class TopicsController < ApplicationController
   include DemographicParser
   include TopicRepresentor
 
+
   # Supported Topics and levels
   SUPPORTED_TOPICS = ['gun_control','mention_immigration','unemployment']
   GRANULARITY_LEVELS = ['daily','weekly','monthly','yearly']
@@ -9,7 +10,7 @@ class TopicsController < ApplicationController
   # Before all find the topic params
   before_action :find_topic
   # Find the demographic if it exists
-  before_action :find_demo, only: [:show,:trend]
+  before_action :find_demo, only: [:show,:trend, :languages]
   # Validate params
   before_action :validate_date
   before_action :validate_trend_params,    only: [:trend]
@@ -17,10 +18,30 @@ class TopicsController < ApplicationController
   def show
     # Get couch request
     sentiment = Topics.get_topic @topic, @demographic, @date_range
-    languages = Topics.get_languages @topic, @demographic, @date_range
+    # Get languages unless searching for a particular one
+    if not (@demographic.has_key? 'language')
+      languages = Topics.get_languages @topic
+    else
+      languages = nil
+    end
+    
+
     # Render json
     render json: show_json(@topic, sentiment, languages)
   end
+
+  def locations
+    # Get response
+    response = Topics.get_locations @topic
+    render json: location_json(@topic, response)
+  end
+
+  def languages 
+    # # Get couch request
+    languages = Topics.get_languages @topic, @demographic, @date_range
+    render json: languages_json(@topic, languages).to_json
+  end
+
 
   def trend
     # Work out day split

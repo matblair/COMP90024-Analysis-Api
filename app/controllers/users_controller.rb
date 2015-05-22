@@ -8,10 +8,7 @@ class UsersController < ApplicationController
 		connectivity = 12
 		date = Date.today
 		time = Time.now
-		render json: {activity: activity,
-					  connectivity: connectivity,
-					  date: date,
-					  time: time }.to_json
+		render json: user_index_json(nil)
 	end
 
 	# Find information about a user

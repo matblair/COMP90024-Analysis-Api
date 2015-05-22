@@ -14,7 +14,6 @@ module DemographicParser
     end
     puts demo
     demo
-
   end
-
+  
 end

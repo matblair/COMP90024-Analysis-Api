@@ -7,18 +7,31 @@ class HashtagsController < ApplicationController
 
   def show
     # Get the tag
-    tag = params[:hashtag]
-    
+    @tag = params[:hashtag]
+
     # Search couch for it
-    couch_response = Hashtags.stats tag, @demographic, @date_range
-    
+    stats = Hashtags.stats @tag, @demographic, @date_range
+    if not (@demographic.has_key? 'language')
+      puts @tag
+      languages = Hashtags.languages(@tag)
+    else
+      languages = nil
+    end
+
     # Return response
-    render json: couch_response
+    if stats.count > 0
+      render json: show_hashtag(@tag, stats, languages)
+    else
+      render json: {msg: "hashtag not found"}, status: :unprocessable_entity
+    end
   end
 
   def similar
     # Send the request to the graph api
-
+    @tag = params[:hashtag]
+    degree = params.has_key?('degree') ? (params['degree'].to_i) : 0
+    frequency = params.has_key?('frequency') ? (params['frequency']) : false
+    render json: Graph.similar_hashtags(@tag, degree, frequency)
   end
 
   def trending

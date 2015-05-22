@@ -26,6 +26,7 @@ class Graph
     def self.make_request request
     	# Build and return json response
 	    uri = URI.encode("http://#{NEO4J_IP}:#{NEO4J_PORT}/api/#{request}")
+	    puts uri
 	    req = Net::HTTP::Get.new(uri)
 	    res = Net::HTTP.start(NEO4J_IP, NEO4J_PORT) { |http| http.request(req) }
 	    if res.kind_of?(Net::HTTPSuccess)

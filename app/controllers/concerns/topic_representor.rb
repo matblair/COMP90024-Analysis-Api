@@ -4,8 +4,6 @@ module TopicRepresentor
 	def show_json topic, sentiment, languages
 
 		sentiment = sentiment['value']
-		languages = languages['rows']
-
 		# Count languages
 		langs = Hash.new(0)
 		languages.each do |row|
@@ -20,21 +18,47 @@ module TopicRepresentor
 			subjectivity: sentiment['subjectivity'],
 			count: sentiment['count']
 		}
-		if langs.count >=1
-			response[:most_popular_language]=langs.max.first
-			response[:least_popular_language]=langs.min.first
-		else
-			response[:most_popular_language]=nil
-			response[:least_popular_language]=nil
+		if langs && langs.count >=1
+			puts langs
+			response[:most_popular_languages]=langs.reduce({}){|h,(k,v)| (h[v] ||= []) << k;h}.max.last
+			response[:least_popular_languages]=langs.reduce({}){|h,(k,v)| (h[v] ||= []) << k;h}.min.last
 		end
+
 		response
 	end
 
-	def trend_json response
-		JSON.parse '{"topic":"ALSKDJASL","trend":"stable","sentiment":"0.9","time_periods":[{"start":"21/01/2015","end":"21/02/2015","popularity":"100","trend":"stable"}]}'
+	def location_json topic, vals
+		# Map over everything and collect the values 
+		response = {topic: topic}
+		vals.map! do |val|
+			entry = {subjectivity: val['subjectivity'],
+					 polarity: val['polarity']}
+			geo = {
+			       lat: val['latitude'],
+			       lon: val['longitude']
+			      }
+			entry['geo'] = geo
+			entry
+		end
+		response['locations'] = vals
+		response
+	end
+
+	def languages_json topic, vals
+		# Map over everything and collect the values 
+		response = {topic: topic}
+		puts vals
+		vals.map! do |val|
+			entry = {language: val['key'].last,
+					 count: val['value']}
+		end
+		response['languages'] = vals
+		response
 	end
 
 	def extremes_json response
-		JSON.parse '{"topic":"ALSKDJASL","greatest_supporter":{"name":"mat","username":"matthefantastic","id":"aslkdjaslkdj","basic_stats":{"number_of_tweets":"3","num_followers":"2","talker":true,"degree_of_connectivity":"12"},"sentiment":{"average_sentiment":"2","average_subjectivity":"3"},"demographic":{"politcal_leaning":"","languages":["",""],"prefered_languge":"en","visitor":true}},"greatest_detract":{"name":"mat","username":"matthefantastic","id":"aslkdjaslkdj","basic_stats":{"number_of_tweets":"3","num_followers":"2","talker":true,"degree_of_connectivity":"12"},"sentiment":{"average_sentiment":"2","average_subjectivity":"3"},"demographic":{"politcal_leaning":"","languages":["",""],"prefered_languge":"en","visitor":true}},"maximum_distance":"9","shortest_distance":"3","shortest_path":{"0":{"user_id":"Name","name":"mat"},"1":{"user_id":"ASLKD","name":"john"}}}'
+		{msg: "not implemented"}.to_json
 	end
+
+
 end

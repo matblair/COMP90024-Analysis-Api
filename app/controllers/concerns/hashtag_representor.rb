@@ -1,16 +1,31 @@
 module HashtagRepresentor
 	extend ActiveSupport::Concern
 
-	def show_hashtag tag
-		JSON.parse '{"text":"yolo","sentiment":"0.9","subjectivity":"0.1","popularity":"10%","most_popular_language":"gb","least_popular_language":"en"}'
+	def show_hashtag tag, stats, langs
+		stats = stats.first
+		stats = stats['value']
+		response = {
+			text: tag,
+			polarity: stats['polarity'],
+			subjectivity: stats['subjectivity'],
+			count: stats['count']
+		}
+
+		if langs && langs.count >=2
+			response[:most_popular_languages]=langs.reduce({}){|h,(k,v)| (h[v] ||= []) << k;h}.max.last
+			response[:least_popular_languages]=langs.reduce({}){|h,(k,v)| (h[v] ||= []) << k;h}.min.last
+		elsif langs && langs.count >= 1
+			response[:languages]=langs.keys
+		end
+
+		response
 	end
 
 	def show_trending response
-		response = JSON.parse '{"0":{"text":"yolo","sentiment":"0.9","subjectivity":"0.1","popularity":"10%"},"1":{"text":"yolo","sentiment":"0.9","subjectivity":"0.1","popularity":"10%"}}'
 		output = {:date => Date.today,
 				  :time => Time.now,
 				  :response => response}
-		output.to_json
+		{msg: "not implemented"}.to_json
 	end
 
 end

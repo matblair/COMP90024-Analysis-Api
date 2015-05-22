@@ -3,22 +3,16 @@ class Hashtags
   def self.stats tag, demographic, date_range
   	# Find the start and end keys
   	startkey, endkey = build_keys tag, demographic, date_range
-
   	# Get the hashtags
-  	tags = Couchdb.make_request 'tweets', 'hashtag', 'stats',  {'startkey'=>startkey, 'endkey'=>endkey, 'group'=>true, 'group_level'=>1}
-  	language = Couchdb.make_request 'tweets', 'topic', 'language_count', {'startkey'=>startkey, 'endkey'=>endkey, 'group'=>true, 'group_level'=>2}
-    tags
+  	tags = (Couchdb.make_request 'tweets', 'hashtag', 'stats',  {'startkey'=>startkey, 'endkey'=>endkey, 'group'=>true, 'group_level'=>1})['rows']
   end
 
-  def self.trending
-
+  def self.languages tag
+    language = (Couchdb.make_request 'tweets', 'hashtag', 'count', {'startkey'=>[tag], 'endkey'=>[tag,{}], 'group'=>true, 'group_level'=>2})['rows']
+    languages = {}
+    language.each{|e|languages[e['key'].last] = e['value']}
+    languages
   end
-
-
-  def self.topics
-
-  end
-
 
   private
   def self.build_keys topic, demographic=nil, date_range=nil

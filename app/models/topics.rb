@@ -9,13 +9,17 @@ class Topics
     sentiment = (Couchdb.make_request 'tweets', 'topic', 'analysis', {'startkey'=>startkey, 'endkey'=>endkey})['rows'].first
   end
 
-  def self.get_languages topic, demographic=nil, date_range=nil
-    # Build start and end key
-    startkey, endkey = build_keys topic, demographic, date_range
-
+  def self.get_languages topic
     # get language count
-    language = Couchdb.make_request 'tweets', 'topic', 'language_count', {'startkey'=>startkey, 'endkey'=>endkey, 'group'=>true}
+    language = (Couchdb.make_request 'tweets', 'topic', 'language_count', {'startkey'=>[topic], 'endkey'=>[topic,{}], 'group'=>true})['rows']
   end
+
+  def self.get_locations topic
+    locations = (Couchdb.make_request 'tweets','topic','location', {'startkey'=>[topic], 'endkey'=>[topic,{}], 'reduce'=>false})['rows']
+    # Collection the values
+    locations.map{|e| e['value']}
+  end
+
 
   private
   def self.build_keys topic, demographic=nil, date_range=nil
