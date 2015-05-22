@@ -1,46 +1,11 @@
-class Locations
-  #GET /locations
+class Locations 
 
-  #This doesn't work properly, don't know what input is needed for GET /locations
-  def self.get_location date, demographic=nil, period= nil#lat, long, date_range = nil
-    # Find the time requested
-    if period
-      start_time, end_time = period.split(" - ")
-    else
-      start_time, end_time = [nil,nil]
-    end
 
-    # Start Key and End Key
-    startkey = ["",""]
-    endkey = ["",""]
-
-    # If we have information about demographic
-    if demographic
-
-    # Find start and end date
-    if date
-      # Find the start key
-      start_date = parse_date "#{date} #{start_time}"
-      end_date = parse_date "#{date} #{start_time}"
-
-      # Pad both things
-      if startkey.count < 3
-        (3-startkey.count).times { startkey << "aa"}
-      end
-      if endkey.count < 3
-        (3-endkey.count).times { endkey << {}}
-      end
-
-      startkey = startkey.concat start_date
-      endkey = endkey.concat end_date
-    end
-
-    DateTime.parse
-
+  def self.where date, demographic=nil, period= nil
     # Build the keys
-    startkey, endkey = build_location_keys date,demographic 
+    startkey, endkey = build_index_location_keys date, period, demographic 
     # Make the request
-    r = Couchdb.make_request 'tweets', 'location','sentiment', {'group'=>true, 'group_level'=>2, 'limit'=>5000}
+    r = (Couchdb.make_request 'tweets', 'location','sentiment_bydate', {'startkey'=>startkey, 'endkey'=>endkey,'group'=>true, 'group_level'=>9, 'limit'=>500})['rows']
   end
 
   #GET /locations/sentiment
@@ -57,37 +22,46 @@ class Locations
   end
 
   private
-  def self.build_location_keys lat, long, date_range = nil
+  def self.build_index_location_keys date, period, demo
     startkey = []
     endkey   = []
-    common   = []
 
-    #Add 'location' unrelated string
-    startkey << "location"
-    endkey   << "location"
-
-    startkey = startkey.concat common
-    endkey = endkey.concat common.map{|e| e.eql?("") ? {} : e }
-
-    # Build start and end date
-    if date_range && (date_range.has_key? "start_date") && (date_range.has_key? "end_date")
-
-      # Find the start key
-      start_date = parse_date date_range["start_date"]
-      end_date = parse_date date_range["end_date"]
-      # Pad both things
-      if startkey.count < 3
-        (3-startkey.count).times { startkey << "a"}
-      end
-      if endkey.count < 3
-        (3-endkey.count).times { endkey << {}}
-      end
-
-      startkey = startkey.concat start_date
-      endkey = endkey.concat end_date
+    # Work out times
+    if period
+      start_time, end_time = period.split(" - ")
+      start_date = parse_date("#{date} #{start_time}")
+      end_date = parse_date("#{date} #{end_time}")
+    else
+      start_date = parse_date("#{date} 0:00am")
+      end_date = parse_date("#{date} 11:59pm")
     end
-    [startkey, endkey]
 
+    # Add them to the keys
+    startkey = startkey.concat start_date
+    endkey = endkey.concat end_date
+
+    ## Add ranges for lat lon (in that order)
+    startkey = startkey.concat [-90,-180]
+    endkey = endkey.concat [90,180]
+
+    # Check if we have a demographic
+    if demo
+      # Check political leaning
+      if demo.has_key? 'political_leaning'
+        startkey << demo['political_leaning']
+        endkey << demo['political_leaning']
+      else
+        startkey << {}
+        endkey << {}
+      end
+      #Check languages
+      if demo.has_key? 'language'
+        startkey << demo['language']
+      end
+      endkey << {}
+    end
+
+    [startkey, endkey]
   end
 
   def self.parse_date date

@@ -3,9 +3,9 @@ class LocationsController < ApplicationController
 	include DemographicParser
 
 	before_action :validate_sentiment_params, only: [:sentiment]
-	before_action :validate_index_params, only: [:index]
 	# Find demographic if it exists
 	before_action :find_demo
+
 
 	def sentiment
 		# Find the location
@@ -20,23 +20,27 @@ class LocationsController < ApplicationController
 		end
 
 		# Make couch request for sentiment
-		couch_response = 'alskdjalskdja'
+		couch_response = Locations.where 
 
 		# Render json
-		render json: sentiment_json(couch_response)
-
+		render json: couch_response
 	end
 
 	def index
-		# Find required period
-		date = Date.parse(params[:date])
-		period = params.has_key?('period') ? params[:period] : nil
-
-		# Make couch request]
-		couch_response = 'aksjdhaksjdh'
-
+		# Find required date
+		if params.has_key? 'date'
+			# Find the period	
+			period = params.has_key?('period') ? params[:period] : nil
+			date = params[:date]
+		else
+			date = Date.yesterday.to_s
+			period = nil
+		end
+		
+		# Make couch request
+		couch_response = Locations.where date, @demographic, period
 		# Render json
-		render json: index_json(couch_response)
+		render json: index_json(couch_response, date, period)
 	end
 
 	def users
@@ -44,10 +48,6 @@ class LocationsController < ApplicationController
 	end
 
 	private
-	# Find required index params
-	def validate_index_params
-		params.require(:date)
-	end
 
 	# Find required sentiment params
 	def validate_sentiment_params
