@@ -9,6 +9,7 @@ module EmojiRepresentor
 			# Build the elem hash
 			elem_hash = {
 				emoji: elem["key"].first,
+				emoji_name: Emoji.find_by_unicode(elem["key"].first).name,
 				count: vals["count"],
 				avg_subjectivity: vals["subjectivity"],
 				avg_polarity: vals["polarity"]
