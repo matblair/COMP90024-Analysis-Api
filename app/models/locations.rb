@@ -17,7 +17,7 @@ class Locations
       response = (Couchdb.make_request 'tweets', 'location', 'sentiment_bydate', {'startkey'=>startkey, 'endkey'=>endkey, 'reduce'=>false})
     end
 
-    total = response['total']
+    total = response['total_rows']
     sentiment = response['rows']
     # Now we need to process sentiment
     polarities = Hash.new(0)
