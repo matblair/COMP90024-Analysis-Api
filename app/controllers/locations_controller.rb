@@ -9,21 +9,29 @@ class LocationsController < ApplicationController
 
 	def sentiment
 		# Find the location
-		location = params[:location]
+		start_loc = [params['start_lat'],params['start_lon']]
+		end_loc = [params['end_lat'],params['end_lon']]
 
-		# Find the range if included and the period if included
-		period = params.has_key?('period') ? params['period'] : nil
-		range = params.has_key?('range') ? params['range'] : nil
-		# Verify range has start and end date or emit it
-		if range && !(range.has_key?('start_date') && range.has_key?('end_date'))
-			range = nil
+		# Find required date
+		if params.has_key?('start_date') && params.has_key?('end_date')
+			# Find the period	
+			start_date = params['start_date']
+			end_date = params['end_date']
+		else
+			start_date = 100.years.ago
+			end_date = Date.today + 200.years
 		end
+		# Find limit if specified
+		limit = params.has_key?('limit') ? params[:limit] : nil
+
+		# Find the period if it's specified
+		period = params.has_key?('period') ? params[:period] : nil
 
 		# Make couch request for sentiment
-		couch_response = Locations.where 
+		analysis = Locations.sentiment_in start_loc, end_loc, start_date, end_date, period, @demographic, limit
 
 		# Render json
-		render json: couch_response
+		render json: sentiment_json(start_loc, end_loc, start_date, end_date, analysis, period)
 	end
 
 	def index
@@ -36,7 +44,7 @@ class LocationsController < ApplicationController
 			date = Date.yesterday.to_s
 			period = nil
 		end
-		
+
 		# Make couch request
 		couch_response = Locations.where date, @demographic, period
 		# Render json
@@ -51,7 +59,8 @@ class LocationsController < ApplicationController
 
 	# Find required sentiment params
 	def validate_sentiment_params
-		params.require(:location)
+		params.require(:start_lat)
+		params.require(:start_lon)
 	end
 
 	private

@@ -24,8 +24,20 @@ module LocationRepresentor
 		json
 	end
 
-	def sentiment_json response
-		{msg: "not implemented"}.to_json
+	def sentiment_json start_loc, end_loc, start_date, end_date, analysis, period=nil
+		response = {
+			start_lat:  start_loc[0],
+			start_lon:  start_loc[1],
+			end_lat:    start_loc[0],
+		    end_lon:    start_loc[1],
+		    start_date: start_date,
+			end_date: 	end_date,
+			sentiment:  analysis
+		}
+		if period
+			response[:period]=period
+		end
+		response
 	end
 
 
