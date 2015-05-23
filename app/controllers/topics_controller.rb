@@ -5,7 +5,7 @@ class TopicsController < ApplicationController
 
   # Supported Topics and levels
   SUPPORTED_TOPICS = ['gun_control','mention_immigration','unemployment']
-  GRANULARITY_LEVELS = ['daily','weekly','monthly','yearly']
+  GRANULARITY_LEVELS = ['daily','weekly','monthly','yearly', 'hourly']
 
   # Before all find the topic params
   before_action :find_topic
@@ -13,7 +13,7 @@ class TopicsController < ApplicationController
   before_action :find_demo, only: [:show,:trend, :languages]
   # Validate params
   before_action :validate_date
-  before_action :validate_trend_params,    only: [:trend]
+  before_action :validate_trend_params, only: [:trend]
 
   def show
     # Get couch request
@@ -25,7 +25,6 @@ class TopicsController < ApplicationController
       languages = nil
     end
     
-
     # Render json
     render json: show_json(@topic, sentiment, languages)
   end
@@ -47,37 +46,39 @@ class TopicsController < ApplicationController
     # Work out day split
     case @granularity
     when 'daily'
-      @days = 1
+      @period = 1.day
     when 'weekly'
-      @days = 7
+      @period = 1.week
     when 'monthly'
-      @days = 30
+      @period = 1.month
     when 'yearly'
-      @days = 365
+      @period = 1.year
+    when 'hourly'
+      @period = 1.hour
     end
 
     # Responses
     responses = []
 
     # Go from start date to end date.
-    start = Date.parse @date_range['start_date']
-    finish = Date.parse @date_range['end_date']
+    start = DateTime.parse @date_range['start_date']
+    finish = DateTime.parse @date_range['end_date']
     puts start
+    
     # Collect all the things
     while start < finish
       # Make a request
-      enddate = start + @days.days
+      enddate = start + @period
       puts "should check for #{start} and #{enddate}"
       response = (Topics.get_topic @topic, @demographic,{"start_date" => start.to_s, "end_date" => enddate.to_s})
       if response
-        response = response['value']
-        responses << {'start' => start, 'end' => enddate, 'count' => response['count'],
-                      'subjectivity' => response['subjectivity'], 'polarity' => response['polarity']}
+        puts response
+        responses << {'start' => start, 'end' => enddate, 'count' => response[:count],
+                      'subjectivity' => response[:subjectivity], 'polarity' => response[:polarity]}
       else
         responses << {'start' => start, 'end' => enddate, 'count' => 0,
                       'subjectivity' => nil, 'polarity' => nil}
       end
-
       start = enddate
     end
 
@@ -99,7 +100,6 @@ class TopicsController < ApplicationController
         trend = 'stable'
       end
     end
-
 
     # Render json
     render json: {topic: @topic, trend: trend, time_periods: responses}

@@ -12,7 +12,6 @@ module DemographicParser
         demo[m]=params[m]
       end
     end
-    puts demo
     demo
   end
   

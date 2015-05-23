@@ -2,11 +2,36 @@ class Topics
 
   # GET /topics/:topic
   def self.get_topic topic, demographic=nil, date_range=nil
-    # Build start and end key
-    startkey, endkey = build_keys topic, demographic, date_range
 
-    # get sentiment summmary
-    sentiment = (Couchdb.make_request 'tweets', 'topic', 'analysis', {'startkey'=>startkey, 'endkey'=>endkey})['rows'].first
+    # Get all dates
+    dates = build_dates date_range
+
+    # Hold all the results
+    sentiment =  {count: 0, subjectivity: 0, polarity: 0}
+
+    dates.each do |date|
+      start_date = date[:start_date]
+      end_date = date[:end_date]
+      # Build start and end keys
+      if demographic.has_key?('political_leaning')
+        startkey, endkey = build_sentiment_keys topic, start_date, end_date, demographic
+        response = (Couchdb.make_request 'tweets', 'topic', 'analysis', {'startkey'=>startkey, 'endkey'=>endkey})['rows']
+      else
+        startkey, endkey = build_date_keys topic, start_date, end_date, demographic
+        response = (Couchdb.make_request 'tweets', 'topic', 'analysis_bydate', {'startkey'=>startkey, 'endkey'=>endkey})['rows']
+      end
+      if response && (not response.empty?)
+        response = response.first
+        sentiment[:count] += response['value']['count']
+        sentiment[:subjectivity] += response['value']['subjectivity']*response['value']['count']
+        sentiment[:polarity] += response['value']['polarity']*response['value']['count']
+      end
+    end
+    if sentiment[:count] > 1
+      sentiment[:subjectivity] = sentiment[:subjectivity]/sentiment[:count]
+      sentiment[:polarity] = sentiment[:polarity]/sentiment[:count]
+    end
+    return sentiment
   end
 
   def self.get_languages topic
@@ -20,9 +45,17 @@ class Topics
     locations.map{|e| e['value']}
   end
 
+  private
+  def self.build_dates date_range
+    if date_range && (date_range.has_key? "start_date") && (date_range.has_key? "end_date")
+      DateMagic.build_date_keys date_range['start_date'], date_range['end_date']
+    else
+      DateMagic.build_date_keys (Date.today - 1.year).to_s, Date.today.to_s
+    end
+  end
 
   private
-  def self.build_keys topic, demographic=nil, date_range=nil
+  def self.build_sentiment_keys topic, start_date, end_date, demographic=nil
     # Build start and end key
     startkey = []
     endkey = []
@@ -31,35 +64,23 @@ class Topics
     if demographic
       if demographic.has_key? "political_leaning"
         common << demographic["political_leaning"]
+      else
+        common << "a"
       end
+
       if demographic.has_key? "language"
-        if common.count < 2
-          common << "aa"
-        end
         common << demographic["language"]
+      else
+        common << "a"
       end
     end
 
     startkey = startkey.concat common
-    endkey = endkey.concat common.map{|e| e.eql?("aa") ? {} : e }
+    endkey = endkey.concat common.map{|e| e.eql?("a") ? {} : e }
 
-    # Build start and end date
-    if date_range && (date_range.has_key? "start_date") && (date_range.has_key? "end_date")
+    startkey = startkey.concat start_date
+    endkey = endkey.concat end_date
 
-      # Find the start key
-      start_date = parse_date date_range["start_date"]
-      end_date = parse_date date_range["end_date"]
-      # Pad both things
-      if startkey.count < 3
-        (3-startkey.count).times { startkey << "aa"}
-      end
-      if endkey.count < 3
-        (3-endkey.count).times { endkey << {}}
-      end
-
-      startkey = startkey.concat start_date
-      endkey = endkey.concat end_date
-    end
 
     # Fill in endkey
     if endkey.count < 8
@@ -69,14 +90,36 @@ class Topics
     [startkey, endkey]
   end
 
+  def self.build_date_keys topic, start_date, end_date, demographic=nil
+    # Build start and end key
+    startkey = [topic]
+    endkey = [topic]
+
+    startkey = startkey.concat start_date
+    endkey = endkey.concat end_date
+
+    # Add demographic markers
+    if demographic
+      if demographic.has_key? "language"
+        startkey << demographic["language"]
+        endkey << demographic["language"]
+      else
+        startkey << "a"
+        endkey << {}
+      end
+      if demographic.has_key? "political_leaning"
+        startkey << demographic["political_leaning"]
+        endkey << demographic["political_leaning"]
+      else
+        endkey << {}
+      end
+    end
+
+    [startkey, endkey]
+  end
+
   def self.get_extremes topic, demographic=nil, date_range=nil
     # Need to query for users
   end
 
-  def self.parse_date date
-    # Parse the date
-    d = DateTime.parse(date)
-    # Build json for that
-    date_array = [d.year, d.month, d.day, d.hour, d.minute]
-  end
 end
