@@ -1,5 +1,22 @@
 class Hashtags
 
+  def self.trending demographic=nil, start_date, end_date
+    #common = demographic['political_leaning']
+    #Couchdb.make_request 'tweets','hashtag', 'stats', {'startkey'=>["unemployment","democrat","en",29,-99], 'endkey'=>["unemployment","democrat","en",30,-100,{},{},{},{},{}]}
+    #startkey=
+    response = (Couchdb.make_request 'tweets', 'hashtag', 'stats_bydate', {'group'=>true, 'group_level'=>10, 'limit' => 100})['rows']
+    response = response.sort_by {|hash| hash['value']['count']}.reverse.first(10)
+    response
+    response.each_with_index do |hash, i|
+      response[i] = {i.to_s => {
+        'text' => hash['key'][9],
+        'polarity' => hash['value']['polarity'],
+        'subjectivity' => hash['value']['subjectivity']}
+      }
+      i = i+1
+    end#, {'startkey'=>startkey, 'endkey'=>endkey}
+  end
+
   def self.stats tag, demographic, date_range
   	# Find the start and end keys
   	startkey, endkey = build_keys tag, demographic, date_range
