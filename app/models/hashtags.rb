@@ -1,10 +1,10 @@
 class Hashtags
 
   def self.stats tag, demographic, date_range
-  	# Find the start and end keys
-  	startkey, endkey = build_keys tag, demographic, date_range
-  	# Get the hashtags
-  	tags = (Couchdb.make_request 'tweets', 'hashtag', 'stats',  {'startkey'=>startkey, 'endkey'=>endkey, 'group'=>true, 'group_level'=>1})['rows']
+    # Find the start and end keys
+    startkey, endkey = build_keys tag, demographic, date_range
+    # Get the hashtags
+    tags = (Couchdb.make_request 'tweets', 'hashtag', 'stats',  {'startkey'=>startkey, 'endkey'=>endkey, 'group'=>true, 'group_level'=>1})['rows']
   end
 
   def self.languages tag
@@ -25,6 +25,7 @@ class Hashtags
       temp[demo] ||= {}
       temp[demo][tag]=count
     end
+
     # Create a response
     response = {"none"=>{},"democrat"=>{},"republican"=>{}}
     # Find the top ten for each
