@@ -14,7 +14,7 @@ class Hashtags
     languages
   end
 
-  def self.topics 
+  def self.topics frequency=false
     topics = (Couchdb.make_request 'tweets', 'hashtag', 'stats', {'group'=>true, 'group_level'=>2, 'limit'=>5000})['rows']
     # Go Through and Build Hash
     temp = {}
@@ -39,6 +39,10 @@ class Hashtags
         end
         response["#{key}"] = top_ten
       end
+    end
+    # Change to array if not frequency
+    if !frequency
+      response.each {|k,vals| response[k]=vals.keys}
     end
     response
   end
