@@ -26,6 +26,13 @@ class HashtagsController < ApplicationController
     end
   end
 
+  def topics
+    # Make the request
+    response = Hashtags.topics
+    render json: response
+  end
+
+
   def similar
     # Send the request to the graph api
     @tag = params[:hashtag]
