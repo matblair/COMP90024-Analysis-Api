@@ -29,6 +29,16 @@ class HashtagsController < ApplicationController
     end
   end
 
+  def topics
+    # Find limit if specified
+    frequency = params.has_key?('frequency') ? params[:frequency] : nil
+
+    # Make the request
+    response = Hashtags.topics frequency
+    render json: response
+  end
+
+
   def similar
     # Send the request to the graph api
     @tag = params[:hashtag]
