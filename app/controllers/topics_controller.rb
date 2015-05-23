@@ -63,18 +63,18 @@ class TopicsController < ApplicationController
     # Go from start date to end date.
     start = DateTime.parse @date_range['start_date']
     finish = DateTime.parse @date_range['end_date']
-    puts start
     
     # Collect all the things
     while start < finish
       # Make a request
       enddate = start + @period
-      puts "should check for #{start} and #{enddate}"
       response = (Topics.get_topic @topic, @demographic,{"start_date" => start.to_s, "end_date" => enddate.to_s})
       if response
-        puts response
-        responses << {'start' => start, 'end' => enddate, 'count' => response[:count],
-                      'subjectivity' => response[:subjectivity], 'polarity' => response[:polarity]}
+        responses << {'start' => start.in_time_zone("Central Time (US & Canada)").to_formatted_s(:long_ordinal), 
+                      'end' => enddate.in_time_zone("Central Time (US & Canada)").to_formatted_s(:long_ordinal), 
+                      'count' => response[:count],
+                      'subjectivity' => response[:subjectivity], 
+                      'polarity' => response[:polarity]}
       else
         responses << {'start' => start, 'end' => enddate, 'count' => 0,
                       'subjectivity' => nil, 'polarity' => nil}
@@ -82,18 +82,17 @@ class TopicsController < ApplicationController
       start = enddate
     end
 
-    puts responses
     # Work out trend from start and end
     polarities = responses.map {|e| e['polarity']}
     polarities.delete nil
-    puts polarities.class
-    if polarities.first > polarities.last
+
+    if polarities && (polarities.first > polarities.last)
       if (polarities.first - polarities.last).abs > 0.5
         trend = 'decreasing'
       else
         trend = 'stable'
       end
-    else
+    elsif polarities
       if (polarities.first - polarities.last).abs > 0.5
         trend = 'increasing'
       else
@@ -131,7 +130,8 @@ class TopicsController < ApplicationController
   #Validate all the params
   def validate_date
     if params.has_key?('start_date') &&  params.has_key?('end_date')
-      @date_range = {"start_date" => params[:start_date], "end_date" => params[:end_date]}
+      @date_range = {"start_date" => DateMagic.sa_to_utc_string(params[:start_date]),
+                     "end_date" => DateMagic.sa_to_utc_string(params[:end_date])}
     end
   end
 

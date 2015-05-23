@@ -2,8 +2,6 @@ module TopicRepresentor
   extend ActiveSupport::Concern
 
   def show_json topic, sentiment, languages
-    # # Remove undefined
-    puts sentiment
     # langs.delete "und"
     response = {
       topic: topic,
@@ -44,7 +42,6 @@ module TopicRepresentor
   def languages_json topic, vals
     # Map over everything and collect the values
     response = {topic: topic}
-    puts vals
     vals.map! do |val|
       entry = {language: val['key'].last,
                count: val['value']}

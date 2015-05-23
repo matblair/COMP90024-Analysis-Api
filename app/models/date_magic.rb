@@ -9,11 +9,26 @@ class DateMagic
   HOUR = 3
   MIN = 4
 
+  def self.san_antonio_time time
+    time.in_time_zone("Central Time (US & Canada)")
+  end
+
+  def self.utc_time time
+    (time + 6.hours)
+  end
+
+  def self.sa_to_utc_string string
+    zone = "Central Time (US & Canada)"  
+    d = ActiveSupport::TimeZone[zone].parse(string)
+    d.in_time_zone("UTC").to_s
+  end
+
   def self.build_date_keys start_date, end_date
     start_date = parse_date start_date
     end_date = parse_date end_date
     
-    if (start_date[DAY]==end_date[DAY]) && (start_date[MONTH]==end_date[MONTH]) && (start_date[YEAR] == end_date[YEAR])
+    if (start_date[MONTH]==end_date[MONTH]) && (start_date[YEAR] == end_date[YEAR])
+      # We differ only by hours or days within thath month so return that.
       return [{start_date: start_date, end_date: end_date}]
     end
 
@@ -35,7 +50,7 @@ class DateMagic
       end
       # Remainder of the time
       p = { start_date: [start_date[YEAR],end_date[MONTH], 1, start_date[HOUR], start_date[MIN]],
-            end_date:  [start_date[YEAR],end_date[MONTH], MAX_DAY, end_date[HOUR], end_date[MIN]]}
+            end_date:  [start_date[YEAR],end_date[MONTH], end_date[DAY], end_date[HOUR], end_date[MIN]]}
       sets << p
     else
       # We need to make up the remaininder of start year
