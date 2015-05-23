@@ -39,8 +39,12 @@ class Topics
     language = (Couchdb.make_request 'tweets', 'topic', 'language_count', {'startkey'=>[topic], 'endkey'=>[topic,{}], 'group'=>true})['rows']
   end
 
-  def self.get_locations topic
-    locations = (Couchdb.make_request 'tweets','topic','location', {'startkey'=>[topic], 'endkey'=>[topic,{}], 'reduce'=>false})['rows']
+  def self.get_locations topic, limit=nil
+  	if limit
+    	locations = (Couchdb.make_request 'tweets','topic','location', {'startkey'=>[topic], 'endkey'=>[topic,{}], 'reduce'=>false, 'limit'=>limit})['rows']
+    else
+    	locations = (Couchdb.make_request 'tweets','topic','location', {'startkey'=>[topic], 'endkey'=>[topic,{}], 'reduce'=>false})['rows']
+    end
     # Collection the values
     locations.map{|e| e['value']}
   end
@@ -118,8 +122,8 @@ class Topics
     [startkey, endkey]
   end
 
-  def self.get_extremes topic, demographic=nil, date_range=nil
-    # Need to query for users
-  end
+  # def self.get_extremes topic, demographic=nil, date_range=nil
+  #   # Need to query for users
+  # end
 
 end

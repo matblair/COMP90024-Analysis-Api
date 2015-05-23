@@ -1,11 +1,11 @@
 class Locations 
 
 
-  def self.where date, demographic=nil, period= nil
+  def self.where date, demographic=nil, period= nil, limit=nil
     # Build the keys
     startkey, endkey = build_index_location_keys date, period, demographic 
     # Make the request
-    r = (Couchdb.make_request 'tweets', 'location','sentiment_bydate', {'startkey'=>startkey, 'endkey'=>endkey,'group'=>true, 'group_level'=>9, 'limit'=>500})['rows']
+    r = (Couchdb.make_request 'tweets', 'location','sentiment_bydate', {'startkey'=>startkey, 'endkey'=>endkey,'group'=>true, 'group_level'=>9, 'limit'=>(limit ? limit : 5000)})['rows']
   end
 
   #GET /locations/sentiment

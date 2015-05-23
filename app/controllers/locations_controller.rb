@@ -19,7 +19,7 @@ class LocationsController < ApplicationController
 			end_date = params['end_date']
 		else
 			start_date = 100.years.ago
-			end_date = Date.today + 200.years
+			end_date = Date.today
 		end
 		# Find limit if specified
 		limit = params.has_key?('limit') ? params[:limit] : nil
@@ -44,6 +44,9 @@ class LocationsController < ApplicationController
 			date = Date.yesterday.to_s
 			period = nil
 		end
+
+		# Find limit if specified
+		limit = params.has_key?('limit') ? params[:limit] : nil
 
 		# Make couch request
 		couch_response = Locations.where date, @demographic, period

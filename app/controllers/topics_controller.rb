@@ -31,6 +31,7 @@ class TopicsController < ApplicationController
 
   def locations
     # Get response
+    limit = params.has_key?('limit') ? params['limit'] : 2000
     response = Topics.get_locations @topic
     render json: location_json(@topic, response)
   end
