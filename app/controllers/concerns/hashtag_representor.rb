@@ -21,11 +21,16 @@ module HashtagRepresentor
 		response
 	end
 
-	def show_trending response
-		output = {:date => Date.today,
-				  :time => Time.now,
-				  :response => response}
-		{msg: "not implemented"}.to_json
+	def show_trending responses
+		trends = {}
+		responses.each_with_index do |elem, index|
+			if index < 10
+				trends["0#{index}"] = elem
+			else
+				trends[index] = elem
+			end
+		end
+		output = {:time_periods => trends}
 	end
 
 end

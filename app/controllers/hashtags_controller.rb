@@ -65,34 +65,33 @@ class HashtagsController < ApplicationController
     responses = []
 
     # Go from start date to end date.
-    start = Date.parse @date_range['start_date']
-    finish = Date.parse @date_range['end_date']
+    puts @date_range  
+    start = DateTime.parse @date_range['start_date']
+    finish = DateTime.parse @date_range['end_date']
     i = 0
     # Collect all the things
     while start < finish do
       # Make a request
       enddate = start + @period
-      response = (Hashtags.trending @demographic, start, finish)
+      response = (Hashtags.trending @demographic, {"start_date" => start.to_s, "end_date" => enddate.to_s})
       if response
-        responses << { 'time_periods' => {i.to_s => { 
-                      'start' => start.in_time_zone("Central Time (US & Canada)").to_formatted_s(:long_ordinal), 
-                      'end' => enddate.in_time_zone("Central Time (US & Canada)").to_formatted_s(:long_ordinal), 
-                      'trending' => response#'subjectivity' => response['subjectivity'], 
-                      #'polarity' => response['polarity']
-                      }  } }
+        responses << { 
+                        'start' => start.in_time_zone("Central Time (US & Canada)").to_formatted_s(:long_ordinal), 
+                        'end' => enddate.in_time_zone("Central Time (US & Canada)").to_formatted_s(:long_ordinal), 
+                        'trending' => response
+                      }  
       else
-        responses << { i.to_s => {'start' => start, 'end' => enddate, 'count' => 0,
-                      'subjectivity' => nil, 'polarity' => nil}   }
+        responses << {  'start' => start, 
+                        'end' => enddate, 
+                        'trending' => {}
+                     }  
       end
       start = enddate
       i = i + 1
     end
 
-    # Make couch request
-    #couch_response = Hashtags.trending @demographic, @date_range, @mood, @granularity
-
     # Respond
-    render json: responses
+    render json: show_trending(responses)
   end
 
   private
@@ -126,11 +125,12 @@ class HashtagsController < ApplicationController
   def find_demo
     @demographic = extract_demographic params
   end
-
+  
   #Validate all the params
   def validate_date
     if params.has_key?('start_date') &&  params.has_key?('end_date')
-      @date_range = {"start_date" => params[:start_date], "end_date" => params[:end_date]}
+      @date_range = {"start_date" => DateMagic.sa_to_utc_string(params[:start_date]),
+                     "end_date" => DateMagic.sa_to_utc_string(params[:end_date])}
     end
   end
 
