@@ -109,6 +109,7 @@ class Hashtags
   private
 
   def self.build_dates date_range
+    puts date_range['end_date']
     if date_range && (date_range.has_key? "start_date") && (date_range.has_key? "end_date")
       DateMagic.build_date_keys date_range['start_date'], date_range['end_date']
     else
@@ -160,6 +161,7 @@ class Hashtags
       end
     end
 
+    # Add to the start and end keys
     startkey = startkey.concat common
     endkey = endkey.concat common.map{|e| e.eql?("") ? {} : e }
 

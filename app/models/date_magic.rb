@@ -35,7 +35,7 @@ class DateMagic
     end_date = parse_date end_date
     
     if (start_date[MONTH]==end_date[MONTH]) && (start_date[YEAR] == end_date[YEAR])
-      # We differ only by hours or days within thath month so return that.
+      # We differ only by hours or days within `hath month so return that.
       return [{start_date: start_date, end_date: end_date}]
     end
 
@@ -46,6 +46,7 @@ class DateMagic
       end_date: [start_date[YEAR],start_date[MONTH], MAX_DAY, end_date[HOUR], end_date[MIN]]
     }
     sets << p
+    
     # Check the differences
     if start_date[YEAR] == end_date[YEAR]
       # Second period completes the span up until the month before

@@ -16,11 +16,10 @@ class Graph
 	end
 
 	# Find connections to a user
-	def self.find_connections user
-
+	def self.find_connections user, degree = nil
+		request = "users/#{user}/connections?degree=#{degree ? degree : 0}"
+		make_request request
 	end
-
-
 
     private
     def self.make_request request
