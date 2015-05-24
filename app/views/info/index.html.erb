@@ -875,37 +875,38 @@ body .markdown-body
 <a href="#topic">Topic</a>
 
 <ol>
-<li><a href="#topic-general">Get General Information About A Topic</a></li>
-<li><a href="#topic-trends">Get Information About Topic Trends</a></li>
-<li><a href="#topic-locations">Get Information About Topic Locations</a></li>
+<li><a href="#get-general-information-about-a-topic">Get General Information About A Topic</a></li>
+<li><a href="#get-information-about-topic-trends">Get Information About Topic Trends</a></li>
+<li><a href="#get-information-about-topic-locations">Get Information About Topic Locations</a></li>
 </ol>
 </li>
 <li>
 <a href="#location">Location</a>
 
 <ol>
-<li><a href="#location-general">Get General Information about Locations' Sentiment</a></li>
-<li><a href="#location-sentiment">Get information about a particular area</a></li>
+<li><a href="#get-general-information-about-locations-sentiment">Get General Information about Locations' Sentiment</a></li>
+<li><a href="#get-information-about-a-particular-area">Get information about a particular area</a></li>
 </ol>
 </li>
 <li>
 <a href="#hashtag">Hashtag</a>
 
 <ol>
-<li><a href="#hashtag-single">Return information about a particular hashtag</a></li>
-<li><a href="#hashtag-popular">Return the ten most popular hashtags</a></li>
-<li><a href="#hashtag-topic">Return hashtags associated to a topic</a></li>
+<li><a href="#return-information-about-a-particular-hashtag">Return information about a particular hashtag</a></li>
+<li><a href="#returns-the-ten-most-popular-hash-tags">Return the ten most popular hashtags</a></li>
+<li><a href="#return-top-10-hashtags-mentioned-for-topics">Return hashtags associated to a topic</a></li>
+<li><a href="#return-similar-hashtags-mentioned-for-topics">Return similar hashtags</a></li>
 </ol>
 </li>
 <li>
 <a href="#emoji">Emoji</a>
 
 <ol>
-<li><a href="#emoji-summary">Get general information about emoji usage</a></li>
-<li><a href="#emoji-heatmap">Get emoji heatmap</a></li>
+<li><a href="#emoji-queries">Get general information about emoji usage</a></li>
+<li><a href="#get-emoji-used-locations">Get emoji heatmap</a></li>
 </ol>
 </li>
-<li><a href="#tweet">Tweet Data Structure</a></li>
+<li><a href="#tweet-data-structure">Tweet Data Structure</a></li>
 </ol>
 
 <h5>
@@ -971,7 +972,7 @@ body .markdown-body
 }</pre></div>
 
 <h3>
-<a id="user-content--get-information-about-topic-trends" class="anchor" href="#-get-information-about-topic-trends" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+<a id="user-content--get-information-about-topic-trends" class="anchor" href="#get-information-about-topic-trends" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 <a name="user-content-topic-trends"></a> Get Information About Topic Trends</h3>
 
 <div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /topics/:topic/trend</span></pre></div>
@@ -1326,7 +1327,7 @@ body .markdown-body
 }</pre></div>
 
 <h5>
-<a id="user-content--return-top-10-hashtags-mentioned-for-topics" class="anchor" href="#-return-top-10-hashtags-mentioned-for-topics" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+<a id="user-content--return-top-10-hashtags-mentioned-for-topics" class="anchor" href="#return-top-10-hashtags-mentioned-for-topics" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 <a name="user-content-hashtag-topic"></a> Return Top 10 Hashtags mentioned for topics</h5>
 
 <div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /hashtag/topics</span></pre></div>
@@ -1366,7 +1367,7 @@ body .markdown-body
 }</pre></div>
 
 <h5>
-<a id="user-content--return-similar-hashtags-mentioned-for-topics" class="anchor" href="#-return-similar-hashtags-mentioned-for-topics" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+<a id="user-content--return-similar-hashtags-mentioned-for-topics" class="anchor" href="#return-similar-hashtags-mentioned-for-topics" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 <a name="user-content-hashtag-topic"></a> Return Similar Hashtags mentioned for topics</h5>
 
 <div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /hashtag/stats/:hashtag/similar</span></pre></div>
@@ -1418,7 +1419,7 @@ body .markdown-body
 <hr>
 
 <h3>
-<a id="user-content--emoji-queries" class="anchor" href="#-emoji-queries" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+<a id="user-content--emoji-queries" class="anchor" href="#emoji-queries" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 <a name="user-content-emoji"></a> Emoji Queries</h3>
 
 <h5>
@@ -1449,7 +1450,7 @@ body .markdown-body
 }</pre></div>
 
 <h5>
-<a id="user-content--get-emoji-used-locations" class="anchor" href="#-get-emoji-used-locations" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+<a id="user-content--get-emoji-used-locations" class="anchor" href="#get-emoji-used-locations" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 <a name="user-content-emoji-heatmap"></a> Get Emoji used locations</h5>
 
 <div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /emoji/:emoji_name/locations</span></pre></div>
@@ -1471,7 +1472,7 @@ body .markdown-body
 } </pre></div>
 
 <h3>
-<a id="user-content--tweet-data-structure" class="anchor" href="#-tweet-data-structure" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+<a id="user-content--tweet-data-structure" class="anchor" href="#tweet-data-structure" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 <a name="user-content-tweet"></a> Tweet Data Structure</h3>
 
 <div class="highlight highlight-json"><pre>{
