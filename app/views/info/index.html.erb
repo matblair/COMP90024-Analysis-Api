@@ -860,7 +860,7 @@ body .markdown-body
   float: left;
   margin: 0.3em 0 0.25em -1.6em;
   vertical-align: middle;
-}</style><title>api_final</title></head><body><article class="markdown-body"><h2>
+}</style><title>API Specification</title></head><body><article class="markdown-body"><h2>
 <a id="user-content-analysis-api-for-san-antonio-texas" class="anchor" href="#analysis-api-for-san-antonio-texas" aria-hidden="true"><span class="octicon octicon-link"></span></a>Analysis API For San Antonio Texas</h2>
 
 <p>This API provides an interface through which users can query certain attributes about the people of San Antonio Texas to discover changing feelings on certain topics. </p>
@@ -877,9 +877,7 @@ body .markdown-body
 <ol>
 <li><a href="#topic-general">Get General Information About A Topic</a></li>
 <li><a href="#topic-trends">Get Information About Topic Trends</a></li>
-<li><a href="#topic-extremes">Get Information About Extreme Topic Backers</a></li>
 <li><a href="#topic-locations">Get Information About Topic Locations</a></li>
-<li><a href="#topic-affluence">Get Information About Topic Affluence</a></li>
 </ol>
 </li>
 <li>
@@ -888,7 +886,6 @@ body .markdown-body
 <ol>
 <li><a href="#location-general">Get General Information about Locations' Sentiment</a></li>
 <li><a href="#location-sentiment">Get information about a particular area</a></li>
-<li><a href="#location-users">Get location of Twitter Users within San Antonio</a></li>
 </ol>
 </li>
 <li>
@@ -898,8 +895,6 @@ body .markdown-body
 <li><a href="#hashtag-single">Return information about a particular hashtag</a></li>
 <li><a href="#hashtag-popular">Return the ten most popular hashtags</a></li>
 <li><a href="#hashtag-topic">Return hashtags associated to a topic</a></li>
-<li>
-<a href="#hashtag-sentiment">Return sentiment of a hashtag</a> </li>
 </ol>
 </li>
 <li>
@@ -910,9 +905,6 @@ body .markdown-body
 <li><a href="#social-user">Ask about a user</a></li>
 <li><a href="#social-demographics">Get Twitter Users for various demographic attributes</a></li>
 <li><a href="#social-friends">Ask about the users particular friends</a></li>
-<li><a href="#social-affluence">Ask about the top 10 affluent twitter users in the region</a></li>
-<li><a href="#social-outward">Ask about outward connectivity of twitter users</a></li>
-<li><a href="#social-retweet">Ask about Top 10 Retweeted Tweets</a></li>
 </ol>
 </li>
 <li>
@@ -921,11 +913,17 @@ body .markdown-body
 <ol>
 <li><a href="#emoji-summary">Get general information about emoji usage</a></li>
 <li><a href="#emoji-heatmap">Get emoji heatmap</a></li>
-<li><a href="#emoji-affluence">Get emoji affluence</a></li>
 </ol>
 </li>
 <li><a href="#tweet">Tweet Data Structure</a></li>
 </ol>
+
+<h5>
+<a id="user-content-general-notes" class="anchor" href="#general-notes" aria-hidden="true"><span class="octicon octicon-link"></span></a>General Notes</h5>
+
+<hr>
+
+<p>As a note, all input times are in San Antonio (Central US Time) Time. Database values are stored in UTC but the API converts to and back in order to make it's calculations.</p>
 
 <h3>
 <a id="user-content-topic-queries" class="anchor" href="#topic-queries" aria-hidden="true"><span class="octicon octicon-link"></span></a>
@@ -952,15 +950,10 @@ body .markdown-body
 <a id="user-content-input-params" class="anchor" href="#input-params" aria-hidden="true"><span class="octicon octicon-link"></span></a>Input Params</h6>
 
 <div class="highlight highlight-json"><pre>{
-    <span class="pl-s"><span class="pl-pds">"</span>demographic_markers<span class="pl-pds">"</span></span>:{
-        <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>visitor<span class="pl-pds">"</span></span>:<span class="pl-c1">true</span>
-    },
-    <span class="pl-s"><span class="pl-pds">"</span>date_range<span class="pl-pds">"</span></span>:{
-      <span class="pl-s"><span class="pl-pds">"</span>start_date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>21/01/2015<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>end_date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>02/03/2015<span class="pl-pds">"</span></span>
-    }
+    <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>start_date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>21/01/2015<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>end_date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>02/03/2015<span class="pl-pds">"</span></span>
 }</pre></div>
 
 <h4>
@@ -982,8 +975,8 @@ body .markdown-body
     <span class="pl-s"><span class="pl-pds">"</span>topic<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>ALSKDJASL<span class="pl-pds">"</span></span>,
     <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.9<span class="pl-pds">"</span></span>,
     <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.4<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>most_popular_language<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>gb<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>least_popular_language<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>en<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>most_popular_languages<span class="pl-pds">"</span></span>:[<span class="pl-s"><span class="pl-pds">"</span>gb<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>de<span class="pl-pds">"</span></span>], <span class="pl-ii">//</span> <span class="pl-ii">If</span> <span class="pl-ii">no</span> <span class="pl-ii">language</span> <span class="pl-ii">specified</span>
+    <span class="pl-s"><span class="pl-pds">"</span>least_popular_languages<span class="pl-pds">"</span></span>:[<span class="pl-s"><span class="pl-pds">"</span>en<span class="pl-pds">"</span></span>],
     <span class="pl-s"><span class="pl-pds">"</span>count<span class="pl-pds">"</span></span>: <span class="pl-c1">1921</span>
 }</pre></div>
 
@@ -997,15 +990,10 @@ body .markdown-body
 <a id="user-content-input-params-1" class="anchor" href="#input-params-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Input Params</h6>
 
 <div class="highlight highlight-json"><pre>{
-    <span class="pl-s"><span class="pl-pds">"</span>demographic_markers<span class="pl-pds">"</span></span>:{
-        <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>visitor<span class="pl-pds">"</span></span>:<span class="pl-c1">true</span>
-    },
-   <span class="pl-s"><span class="pl-pds">"</span>date_range<span class="pl-pds">"</span></span>:{
-      <span class="pl-s"><span class="pl-pds">"</span>start_date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>21/01/2015<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>end_date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>02/03/2015<span class="pl-pds">"</span></span>
-    },
+    <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>start_date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>21/01/2015<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>end_date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>02/03/2015<span class="pl-pds">"</span></span>,
     <span class="pl-s"><span class="pl-pds">"</span>granularity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>level<span class="pl-pds">"</span></span>
 }</pre></div>
 
@@ -1063,116 +1051,44 @@ body .markdown-body
 </ul>
 
 <h3>
-<a id="user-content-get-information-about-extreme-topic-backers" class="anchor" href="#get-information-about-extreme-topic-backers" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<a name="user-content-topic-extremes"></a>Get Information About Extreme Topic Backers</h3>
-
-<div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /topics/:topic/extremes</span></pre></div>
-
-<h6>
-<a id="user-content-input-params-2" class="anchor" href="#input-params-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Input Params</h6>
-
-<div class="highlight highlight-json"><pre>{
-    <span class="pl-s"><span class="pl-pds">"</span>date_range<span class="pl-pds">"</span></span>:{
-      <span class="pl-s"><span class="pl-pds">"</span>start_date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>21/01/2015<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>end_date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>02/03/2015<span class="pl-pds">"</span></span>
-    }
-}</pre></div>
-
-<h4>
-<a id="user-content-output-2" class="anchor" href="#output-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
-
-<div class="highlight highlight-json"><pre>{
-    <span class="pl-s"><span class="pl-pds">"</span>topic<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>ALSKDJASL<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>greatest_supporter<span class="pl-pds">"</span></span>:{
-        <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>mat<span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>username<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>matthefantastic<span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>aslkdjaslkdj<span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>basic_stats<span class="pl-pds">"</span></span>:{
-          <span class="pl-s"><span class="pl-pds">"</span>number_of_tweets<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>3<span class="pl-pds">"</span></span>,
-          <span class="pl-s"><span class="pl-pds">"</span>num_followers<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>2<span class="pl-pds">"</span></span>,
-          <span class="pl-s"><span class="pl-pds">"</span>talker<span class="pl-pds">"</span></span>:<span class="pl-c1">true</span>,
-          <span class="pl-s"><span class="pl-pds">"</span>degree_of_connectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>12<span class="pl-pds">"</span></span>
-        },
-        <span class="pl-s"><span class="pl-pds">"</span>sentiment<span class="pl-pds">"</span></span>:{
-          <span class="pl-s"><span class="pl-pds">"</span>average_sentiment<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>2<span class="pl-pds">"</span></span>,
-          <span class="pl-s"><span class="pl-pds">"</span>average_subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>3<span class="pl-pds">"</span></span>,
-        },
-        <span class="pl-s"><span class="pl-pds">"</span>demographic<span class="pl-pds">"</span></span>:{
-            <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
-            <span class="pl-s"><span class="pl-pds">"</span>languages<span class="pl-pds">"</span></span>:[<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>],
-            <span class="pl-s"><span class="pl-pds">"</span>prefered_languge<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>en<span class="pl-pds">"</span></span>,
-            <span class="pl-s"><span class="pl-pds">"</span>visitor<span class="pl-pds">"</span></span>:<span class="pl-c1">true</span>
-        }
-      },
-    <span class="pl-s"><span class="pl-pds">"</span>greatest_detract<span class="pl-pds">"</span></span>:{
-          <span class="pl-ii">//As</span> <span class="pl-ii">above</span>
-      }
-    },
-    <span class="pl-s"><span class="pl-pds">"</span>maximum_distance<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>9<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>shortest_distance<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>3<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>shortest_path<span class="pl-pds">"</span></span>:{
-      <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>:{
-          <span class="pl-s"><span class="pl-pds">"</span>user_id<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>Name<span class="pl-pds">"</span></span>,
-          <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>mat<span class="pl-pds">"</span></span>
-        },
-        <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>:{
-          <span class="pl-s"><span class="pl-pds">"</span>user_id<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>ASLKD<span class="pl-pds">"</span></span>,
-          <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>john<span class="pl-pds">"</span></span>
-        }
-    }
-}</pre></div>
-
-<h3>
 <a id="user-content-get-information-about-topic-locations" class="anchor" href="#get-information-about-topic-locations" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 <a name="user-content-topic-location"></a>Get Information About Topic Locations</h3>
 
 <div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /topics/:topic/locations</span></pre></div>
 
+<h6>
+<a id="user-content-input-params-2" class="anchor" href="#input-params-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Input Params</h6>
+
+<div class="highlight highlight-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>limit<span class="pl-pds">"</span></span>:<span class="pl-c1">200</span>, <span class="pl-ii">//</span> <span class="pl-ii">Optional</span>
+}</pre></div>
+
 <h4>
-<a id="user-content-output-3" class="anchor" href="#output-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
+<a id="user-content-output-2" class="anchor" href="#output-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
 
 <p>List of Points with Sentiment Informations</p>
 
-<div class="highlight highlight-json"><pre>[{<span class="pl-s"><span class="pl-pds">"</span>geo<span class="pl-pds">"</span></span>: {<span class="pl-s"><span class="pl-pds">"</span>lat<span class="pl-pds">"</span></span>: <span class="pl-c1">12.12321</span>, 
-          <span class="pl-s"><span class="pl-pds">"</span>lng<span class="pl-pds">"</span></span>: <span class="pl-c1">13.12312</span>},
-  <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>: <span class="pl-c1">0.5</span>,
-  <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>: <span class="pl-c1">0.2</span>,
-  <span class="pl-s"><span class="pl-pds">"</span>mood<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>happy<span class="pl-pds">"</span></span>
-}]</pre></div>
-
-<h3>
-<a id="user-content-get-information-about-topic-affluence" class="anchor" href="#get-information-about-topic-affluence" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<a name="user-content-topic-affluence"></a>Get Information About Topic Affluence</h3>
-
-<div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /topics/:topic/affluence</span></pre></div>
-
-<h4>
-<a id="user-content-output-4" class="anchor" href="#output-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
-
 <div class="highlight highlight-json"><pre>{
-  <span class="pl-s"><span class="pl-pds">"</span>insider<span class="pl-pds">"</span></span>: {
-    <span class="pl-s"><span class="pl-pds">"</span>count<span class="pl-pds">"</span></span>: <span class="pl-c1">1283</span>, <span class="pl-ii">//counts</span> <span class="pl-ii">how</span> <span class="pl-ii">many</span> <span class="pl-ii">tweets</span> <span class="pl-ii">were</span> <span class="pl-ii">mentioned</span> <span class="pl-ii">within</span> <span class="pl-ii">the</span> <span class="pl-ii">search</span> <span class="pl-ii">radius.</span> 
-    <span class="pl-s"><span class="pl-pds">"</span>avg_polarity<span class="pl-pds">"</span></span>: <span class="pl-c1">0.5</span>, 
-    <span class="pl-s"><span class="pl-pds">"</span>avg_subjectivity<span class="pl-pds">"</span></span>: <span class="pl-c1">0.2</span>,
-    <span class="pl-s"><span class="pl-pds">"</span>mood<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>happy<span class="pl-pds">"</span></span> 
-  },
-  <span class="pl-s"><span class="pl-pds">"</span>outsider<span class="pl-pds">"</span></span>: {
-    <span class="pl-s"><span class="pl-pds">"</span>count<span class="pl-pds">"</span></span>: <span class="pl-c1">1000000000</span>,
-    <span class="pl-s"><span class="pl-pds">"</span>avg_polarity<span class="pl-pds">"</span></span>: <span class="pl-c1">-0.2</span>,
-    <span class="pl-s"><span class="pl-pds">"</span>avg_subjectivity<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>,
-    <span class="pl-s"><span class="pl-pds">"</span>mood<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>sad<span class="pl-pds">"</span></span>
-  },
-  <span class="pl-s"><span class="pl-pds">"</span>outreach_nodes<span class="pl-pds">"</span></span>: {
-    <span class="pl-s"><span class="pl-pds">"</span>count<span class="pl-pds">"</span></span>: <span class="pl-c1">29</span>, <span class="pl-ii">//counts</span> <span class="pl-ii">how</span> <span class="pl-ii">many</span> <span class="pl-ii">insider</span> <span class="pl-ii">tweets</span> <span class="pl-ii">were</span> <span class="pl-ii">retweeted.</span>
-    <span class="pl-s"><span class="pl-pds">"</span>avg_spread<span class="pl-pds">"</span></span>: <span class="pl-c1">10000</span>, <span class="pl-ii">//counts</span> <span class="pl-ii">on</span> <span class="pl-ii">average</span> <span class="pl-ii">how</span> <span class="pl-ii">many</span> <span class="pl-ii">people</span> <span class="pl-ii">retweeted</span> <span class="pl-ii">the</span> <span class="pl-ii">insider</span> <span class="pl-ii">tweet.</span> 
-    <span class="pl-s"><span class="pl-pds">"</span>avg_polarity<span class="pl-pds">"</span></span>: <span class="pl-c1">1</span>,
-    <span class="pl-s"><span class="pl-pds">"</span>avg_subjectivity<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>
-  }
+  <span class="pl-s"><span class="pl-pds">"</span>locations<span class="pl-pds">"</span></span>: [
+    {
+      <span class="pl-s"><span class="pl-pds">"</span>geo<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>lat<span class="pl-pds">"</span></span>: <span class="pl-c1">29.46197139</span>,
+        <span class="pl-s"><span class="pl-pds">"</span>lon<span class="pl-pds">"</span></span>: <span class="pl-c1">-98.3589597</span>
+      },
+      <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>,
+      <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>
+    },
+    {
+      <span class="pl-s"><span class="pl-pds">"</span>geo<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>lat<span class="pl-pds">"</span></span>: <span class="pl-c1">29.52802452</span>,
+        <span class="pl-s"><span class="pl-pds">"</span>lon<span class="pl-pds">"</span></span>: <span class="pl-c1">-98.67108143</span> 
+      },
+      <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>,
+      <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>
+    }
+  ],
+  <span class="pl-s"><span class="pl-pds">"</span>topic<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>unemployment<span class="pl-pds">"</span></span>
 }</pre></div>
-
-<p>NOTE: Insider refers to users within the search radius, while outsiders refer to users that have been connected via tweets outside the search radius. </p>
-
-<hr>
 
 <h3>
 <a id="user-content-location-queries" class="anchor" href="#location-queries" aria-hidden="true"><span class="octicon octicon-link"></span></a>
@@ -1188,25 +1104,11 @@ body .markdown-body
 <a id="user-content-input" class="anchor" href="#input" aria-hidden="true"><span class="octicon octicon-link"></span></a>Input</h4>
 
 <div class="highlight highlight-json"><pre>{
-    <span class="pl-s"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>21/01/2015<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>demographic_markers<span class="pl-pds">"</span></span>:{
-        <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>mood<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>sad<span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>visitor<span class="pl-pds">"</span></span>:<span class="pl-c1">true</span>
-    },
+    <span class="pl-s"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>21/01/2015<span class="pl-pds">"</span></span>, <span class="pl-ii">//</span> <span class="pl-ii">DEFAULT</span> <span class="pl-ii">IS</span> <span class="pl-ii">YESTERDAY</span>
+    <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
     <span class="pl-s"><span class="pl-pds">"</span>period<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>1:00pm - 2:00pm<span class="pl-pds">"</span></span> <span class="pl-ii">//(optional)</span>
 }</pre></div>
-
-<h4>
-<a id="user-content-mood-optional" class="anchor" href="#mood-optional" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mood (Optional)</h4>
-
-<p>One of:</p>
-
-<ul>
-<li>"happy"</li>
-<li>"sad"</li>
-</ul>
 
 <h4>
 <a id="user-content-demographic-markers---optional-2" class="anchor" href="#demographic-markers---optional-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demographic Markers - (Optional)</h4>
@@ -1221,7 +1123,7 @@ body .markdown-body
 <p>Language is a two character language code, i.e. "en","ch","gb"</p>
 
 <h4>
-<a id="user-content-output-5" class="anchor" href="#output-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
+<a id="user-content-output-3" class="anchor" href="#output-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
 
 <div class="highlight highlight-json"><pre>{
     <span class="pl-s"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>21/01/2015<span class="pl-pds">"</span></span>,
@@ -1248,19 +1150,16 @@ body .markdown-body
 <a id="user-content-input-1" class="anchor" href="#input-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Input</h4>
 
 <div class="highlight highlight-json"><pre>{
-    <span class="pl-s"><span class="pl-pds">"</span>range<span class="pl-pds">"</span></span>:{ <span class="pl-ii">//(optional)</span>
-      <span class="pl-s"><span class="pl-pds">"</span>start_date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>21/01/2015<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>end_date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>03/02/2015<span class="pl-pds">"</span></span>
-    },
-
+    <span class="pl-s"><span class="pl-pds">"</span>start_date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>21/01/2015<span class="pl-pds">"</span></span>, <span class="pl-ii">//</span> <span class="pl-ii">(optional)</span>
+    <span class="pl-s"><span class="pl-pds">"</span>end_date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>03/02/2015<span class="pl-pds">"</span></span>, <span class="pl-ii">//</span> <span class="pl-ii">(optional)</span>
     <span class="pl-s"><span class="pl-pds">"</span>period<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>1:00pm - 2:00pm<span class="pl-pds">"</span></span>, <span class="pl-ii">//(optional)</span>
-
-    <span class="pl-s"><span class="pl-pds">"</span>deomographic_markers<span class="pl-pds">"</span></span>:{
-        <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>visitor<span class="pl-pds">"</span></span>:<span class="pl-c1">true</span>
-    }
-    <span class="pl-s"><span class="pl-pds">"</span>location<span class="pl-pds">"</span></span>[{<span class="pl-s"><span class="pl-pds">"</span>lat<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>123<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>long<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>123<span class="pl-pds">"</span></span>},{<span class="pl-s"><span class="pl-pds">"</span>lat<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>23<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>long<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>123<span class="pl-pds">"</span></span>}]
+    <span class="pl-s"><span class="pl-pds">"</span>limit<span class="pl-pds">"</span></span>:<span class="pl-c1">500</span>, <span class="pl-ii">//</span> <span class="pl-ii">(optional)</span>
+    <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-ii">//(optional)</span>
+    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-ii">//(optional)</span>
+    <span class="pl-s"><span class="pl-pds">"</span>start_lat<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>123<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>start_long<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>123<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>end_lat<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>23<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>end_long<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>123<span class="pl-pds">"</span></span>
 }</pre></div>
 
 <h4>
@@ -1276,15 +1175,19 @@ body .markdown-body
 <p>Language is a two character language code, i.e. "en","ch","gb"</p>
 
 <h4>
-<a id="user-content-output-6" class="anchor" href="#output-6" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
+<a id="user-content-output-4" class="anchor" href="#output-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
 
 <div class="highlight highlight-json"><pre>{
     <span class="pl-s"><span class="pl-pds">"</span>start_date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>21/01/2015<span class="pl-pds">"</span></span>,
     <span class="pl-s"><span class="pl-pds">"</span>end_date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>03/02/2015<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>location<span class="pl-pds">"</span></span>:[{<span class="pl-s"><span class="pl-pds">"</span>lat<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>123<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>lng<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>123<span class="pl-pds">"</span></span>},
-                {<span class="pl-s"><span class="pl-pds">"</span>lat<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>123<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>lng<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>123<span class="pl-pds">"</span></span>}],
-    <span class="pl-s"><span class="pl-pds">"</span>period<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>1:00pm - 2:00pm<span class="pl-pds">"</span></span>, <span class="pl-ii">//(optional)</span>
+    <span class="pl-s"><span class="pl-pds">"</span>start_lat<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>123<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>start_long<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>123<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>end_lat<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>23<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>end_long<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>123<span class="pl-pds">"</span></span>
+    <span class="pl-s"><span class="pl-pds">"</span>period<span class="pl-pds">"</span></span><span class="pl-ii">:</span><span class="pl-s"><span class="pl-pds">"</span>1:00pm - 2:00pm<span class="pl-pds">"</span></span>, <span class="pl-ii">//(optional)</span>
     <span class="pl-s"><span class="pl-pds">"</span>sentiment<span class="pl-pds">"</span></span>:{
+        <span class="pl-s"><span class="pl-pds">"</span>points<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>1290<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>total<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>97850<span class="pl-pds">"</span></span>,
         <span class="pl-s"><span class="pl-pds">"</span>polarities<span class="pl-pds">"</span></span>:{
             <span class="pl-s"><span class="pl-pds">"</span>0.1<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>10<span class="pl-pds">"</span></span>,
             <span class="pl-s"><span class="pl-pds">"</span>0.2<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>20<span class="pl-pds">"</span></span>
@@ -1295,22 +1198,6 @@ body .markdown-body
         }
     }
 }</pre></div>
-
-<h5>
-<a id="user-content--get-location-of-twitter-users-within-san-antonio" class="anchor" href="#-get-location-of-twitter-users-within-san-antonio" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<a name="user-content-location-users"></a> Get location of Twitter Users within San Antonio</h5>
-
-<div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /location/users</span></pre></div>
-
-<h4>
-<a id="user-content-output-7" class="anchor" href="#output-7" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
-
-<div class="highlight highlight-json"><pre>{<span class="pl-ii">[</span>
-  <span class="pl-ii">{</span><span class="pl-s"><span class="pl-pds">"</span>lat<span class="pl-pds">"</span></span>: <span class="pl-c1">12.12312</span>,
-   <span class="pl-s"><span class="pl-pds">"</span>lng<span class="pl-pds">"</span></span>: <span class="pl-c1">21.29123</span>},
-  {<span class="pl-s"><span class="pl-pds">"</span>lat<span class="pl-pds">"</span></span>: <span class="pl-c1">92.12312</span>,
-   <span class="pl-s"><span class="pl-pds">"</span>lng<span class="pl-pds">"</span></span>: <span class="pl-c1">82.12312</span>}
-]}</pre></div>
 
 <h3>
 <a id="user-content-hashtag-queries" class="anchor" href="#hashtag-queries" aria-hidden="true"><span class="octicon octicon-link"></span></a>
@@ -1329,7 +1216,6 @@ body .markdown-body
     <span class="pl-s"><span class="pl-pds">"</span>deomographic_markers<span class="pl-pds">"</span></span>:{
         <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
         <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>visitor<span class="pl-pds">"</span></span>:<span class="pl-c1">true</span>
     }
 }</pre></div>
 
@@ -1346,15 +1232,15 @@ body .markdown-body
 <p>Language is a two character language code, i.e. "en","ch","gb"</p>
 
 <h4>
-<a id="user-content-output-8" class="anchor" href="#output-8" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
+<a id="user-content-output-5" class="anchor" href="#output-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
 
 <div class="highlight highlight-json"><pre>{
     <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>yolo<span class="pl-pds">"</span></span>,
     <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.9<span class="pl-pds">"</span></span>,
     <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.1<span class="pl-pds">"</span></span>,
     <span class="pl-s"><span class="pl-pds">"</span>popularity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>10%<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>most_popular_language<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>gb<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>least_popular_language<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>en<span class="pl-pds">"</span></span>
+    <span class="pl-s"><span class="pl-pds">"</span>most_popular_languages<span class="pl-pds">"</span></span>:[<span class="pl-s"><span class="pl-pds">"</span>gb<span class="pl-pds">"</span></span>],
+    <span class="pl-s"><span class="pl-pds">"</span>least_popular_languages<span class="pl-pds">"</span></span>:[<span class="pl-s"><span class="pl-pds">"</span>en<span class="pl-pds">"</span></span>]
 }</pre></div>
 
 <h4>
@@ -1372,16 +1258,10 @@ body .markdown-body
 <a id="user-content-input-3" class="anchor" href="#input-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Input</h4>
 
 <div class="highlight highlight-json"><pre>{
-    <span class="pl-s"><span class="pl-pds">"</span>demographic_markers<span class="pl-pds">"</span></span>:{
-        <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>visitor<span class="pl-pds">"</span></span>:<span class="pl-c1">true</span>
-    },
-    <span class="pl-s"><span class="pl-pds">"</span>mood<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>happy<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>time_range<span class="pl-pds">"</span></span>: {
-      <span class="pl-s"><span class="pl-pds">"</span>since<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>15/4/2015<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>until<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>20/4/2015<span class="pl-pds">"</span></span>
-    },
+    <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>start_date<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>15/4/2015<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>start_date<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>20/4/2015<span class="pl-pds">"</span></span>,
     <span class="pl-s"><span class="pl-pds">"</span>granularity<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>hourly<span class="pl-pds">"</span></span>
 }</pre></div>
 
@@ -1396,16 +1276,6 @@ body .markdown-body
 </ul>
 
 <p>Language is a two character language code, i.e. "en","ch","gb"</p>
-
-<h4>
-<a id="user-content-mood-optional-1" class="anchor" href="#mood-optional-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mood (Optional)</h4>
-
-<p>One of:</p>
-
-<ul>
-<li>"happy"</li>
-<li>"sad"</li>
-</ul>
 
 <h6>
 <a id="user-content-granularity-optional" class="anchor" href="#granularity-optional" aria-hidden="true"><span class="octicon octicon-link"></span></a>Granularity (Optional)</h6>
@@ -1422,38 +1292,43 @@ body .markdown-body
 </ul>
 
 <h4>
-<a id="user-content-output-9" class="anchor" href="#output-9" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
+<a id="user-content-output-6" class="anchor" href="#output-6" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
 
 <div class="highlight highlight-json"><pre>{
-  <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>: {<span class="pl-s"><span class="pl-pds">"</span>datetime<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>UTCTime<span class="pl-pds">"</span></span>,
-          <span class="pl-s"><span class="pl-pds">"</span>trending<span class="pl-pds">"</span></span>:{
-              <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>:{
-                  <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>ILoveHaskell<span class="pl-pds">"</span></span>,
-                  <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.9<span class="pl-pds">"</span></span>,
-                  <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.1<span class="pl-pds">"</span></span>
-              },
-              <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>:{
-                  <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>HaskellSucksMonkeyBalls<span class="pl-pds">"</span></span>,
-                  <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.9<span class="pl-pds">"</span></span>,
-                  <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.1<span class="pl-pds">"</span></span>
-              } <span class="pl-ii">//</span><span class="pl-c1">10</span> <span class="pl-ii">of</span> <span class="pl-ii">these</span> <span class="pl-ii">for</span> <span class="pl-ii">each</span> <span class="pl-ii">period.</span>
-          }
-      },
-  <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>: {<span class="pl-s"><span class="pl-pds">"</span>datetime<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>UTCTime<span class="pl-pds">"</span></span>,
-          <span class="pl-s"><span class="pl-pds">"</span>trending<span class="pl-pds">"</span></span>:{
-              <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>:{
-                  <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>TechiesBOOM<span class="pl-pds">"</span></span>,
-                  <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.9<span class="pl-pds">"</span></span>,
-                  <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.1<span class="pl-pds">"</span></span>
-              },
-              <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>:{
-                  <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>PudgeHook<span class="pl-pds">"</span></span>,
-                  <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>-1<span class="pl-pds">"</span></span>,
-                  <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>
-              } <span class="pl-ii">//</span><span class="pl-c1">10</span> <span class="pl-ii">of</span> <span class="pl-ii">these</span> <span class="pl-ii">for</span> <span class="pl-ii">each</span> <span class="pl-ii">period.</span>
-          }
-
+  <span class="pl-s"><span class="pl-pds">"</span>time_periods<span class="pl-pds">"</span></span> : {
+    <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>: {
+      <span class="pl-s"><span class="pl-pds">"</span>start_date<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>15/4/2015<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>end_date<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>20/4/2015<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>trending<span class="pl-pds">"</span></span>:{
+        <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>:{
+            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>ILoveHaskell<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.9<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.1<span class="pl-pds">"</span></span>
+        },
+        <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>:{
+            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>HaskellSucksMonkeyBalls<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.9<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.1<span class="pl-pds">"</span></span>
+        } <span class="pl-ii">//</span><span class="pl-c1">10</span> <span class="pl-ii">of</span> <span class="pl-ii">these</span> <span class="pl-ii">for</span> <span class="pl-ii">each</span> <span class="pl-ii">period.</span>
       }
+    },
+    <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>: 
+      <span class="pl-s"><span class="pl-pds">"</span>start_date<span class="pl-pds">"</span></span><span class="pl-ii">:</span> <span class="pl-s"><span class="pl-pds">"</span>15/4/2015<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>end_date<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>20/4/2015<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>trending<span class="pl-pds">"</span></span>:{
+        <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>:{
+            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>TechiesBOOM<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.9<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.1<span class="pl-pds">"</span></span>
+        },
+        <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>:{
+            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>PudgeHook<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>-1<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>
+        } <span class="pl-ii">//</span><span class="pl-c1">10</span> <span class="pl-ii">of</span> <span class="pl-ii">these</span> <span class="pl-ii">for</span> <span class="pl-ii">each</span> <span class="pl-ii">period.</span>
+      }
+    }
+  }
 }</pre></div>
 
 <h5>
@@ -1462,8 +1337,29 @@ body .markdown-body
 
 <div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /hashtag/topics</span></pre></div>
 
+<h6>
+<a id="user-content-input-params-3" class="anchor" href="#input-params-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Input Params</h6>
+
+<div class="highlight highlight-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>frequency<span class="pl-pds">"</span></span>:<span class="pl-c1">true</span>, <span class="pl-ii">//</span> <span class="pl-ii">Optional</span> <span class="pl-ii">-</span> <span class="pl-ii">Defaults</span> <span class="pl-ii">to</span> <span class="pl-ii">false</span>
+}</pre></div>
+
 <h4>
-<a id="user-content-output-10" class="anchor" href="#output-10" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
+<a id="user-content-output---with-frequency" class="anchor" href="#output---with-frequency" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output - With Frequency</h4>
+
+<div class="highlight highlight-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>gun_control<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>hashtags<span class="pl-pds">"</span></span>: {
+      <span class="pl-s"><span class="pl-pds">"</span>#donkeys<span class="pl-pds">"</span></span>:<span class="pl-c1">3</span>
+      <span class="pl-s"><span class="pl-pds">"</span>#obamasux<span class="pl-pds">"</span></span><span class="pl-ii">:</span><span class="pl-c1">12</span>
+      <span class="pl-s"><span class="pl-pds">"</span>#iloveguns<span class="pl-pds">"</span></span><span class="pl-ii">:</span><span class="pl-c1">1230</span> 
+      <span class="pl-ii">//Maximum</span> <span class="pl-ii">Limit</span> <span class="pl-ii">of</span> <span class="pl-c1">10</span>
+    }
+  } <span class="pl-ii">//</span> <span class="pl-ii">Etc</span> <span class="pl-ii">for</span> <span class="pl-ii">all</span> <span class="pl-ii">supported</span> <span class="pl-ii">topics</span>
+}</pre></div>
+
+<h4>
+<a id="user-content-output---without-frequency" class="anchor" href="#output---without-frequency" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output - Without Frequency</h4>
 
 <div class="highlight highlight-json"><pre>{
   <span class="pl-s"><span class="pl-pds">"</span>gun_control<span class="pl-pds">"</span></span>: {
@@ -1472,34 +1368,57 @@ body .markdown-body
       <span class="pl-s"><span class="pl-pds">"</span>#obamasux<span class="pl-pds">"</span></span>,
       <span class="pl-s"><span class="pl-pds">"</span>#iloveguns<span class="pl-pds">"</span></span> <span class="pl-ii">//Maximum</span> <span class="pl-ii">Limit</span> <span class="pl-ii">of</span> <span class="pl-c1">10</span>
     ]
-  },
-  <span class="pl-s"><span class="pl-pds">"</span>immigration<span class="pl-pds">"</span></span>: {
-    <span class="pl-s"><span class="pl-pds">"</span>hashtags<span class="pl-pds">"</span></span>: [
-      <span class="pl-s"><span class="pl-pds">"</span>#MoreAsiansPlox<span class="pl-pds">"</span></span>
-    ]
-  },
-  <span class="pl-s"><span class="pl-pds">"</span>unemployment<span class="pl-pds">"</span></span>: {
-    <span class="pl-s"><span class="pl-pds">"</span>hashtags<span class="pl-pds">"</span></span>: [
-      <span class="pl-s"><span class="pl-pds">"</span>#foodstamps<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>#LifeSux<span class="pl-pds">"</span></span>
-    ]
-  }
+  } <span class="pl-ii">//</span> <span class="pl-ii">Etc</span> <span class="pl-ii">for</span> <span class="pl-ii">all</span> <span class="pl-ii">supported</span> <span class="pl-ii">topics</span>
 }</pre></div>
 
 <h5>
-<a id="user-content--return-sentiment-of-a-hashtag" class="anchor" href="#-return-sentiment-of-a-hashtag" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<a name="user-content-hashtag-sentiment"></a> Return sentiment of a hashtag</h5>
+<a id="user-content--return-similar-hashtags-mentioned-for-topics" class="anchor" href="#-return-similar-hashtags-mentioned-for-topics" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+<a name="user-content-hashtag-topic"></a> Return Similar Hashtags mentioned for topics</h5>
 
-<div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /hashtag/:hashtag/sentiment</span></pre></div>
+<div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /hashtag/stats/:hashtag/similar</span></pre></div>
 
 <h4>
-<a id="user-content-output-11" class="anchor" href="#output-11" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
+<a id="user-content-input-4" class="anchor" href="#input-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Input</h4>
 
 <div class="highlight highlight-json"><pre>{
-  <span class="pl-s"><span class="pl-pds">"</span>hashtag<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>pikachurox<span class="pl-pds">"</span></span>,
-  <span class="pl-s"><span class="pl-pds">"</span>avg_polarity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.9<span class="pl-pds">"</span></span>,
-  <span class="pl-s"><span class="pl-pds">"</span>avg_subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.1<span class="pl-pds">"</span></span>,
-  <span class="pl-s"><span class="pl-pds">"</span>count<span class="pl-pds">"</span></span>: <span class="pl-c1">12312</span>, <span class="pl-ii">//tag</span> <span class="pl-ii">instances</span>
+    <span class="pl-s"><span class="pl-pds">"</span>degree<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>frequency<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>true<span class="pl-pds">"</span></span>
+}</pre></div>
+
+<h5>
+<a id="user-content-degree-optional" class="anchor" href="#degree-optional" aria-hidden="true"><span class="octicon octicon-link"></span></a>Degree (Optional)</h5>
+
+<p>One of 0 or 1</p>
+
+<h5>
+<a id="user-content-frequency-optional" class="anchor" href="#frequency-optional" aria-hidden="true"><span class="octicon octicon-link"></span></a>Frequency (Optional)</h5>
+
+<p>One of:</p>
+
+<ul>
+<li>true</li>
+<li>false</li>
+</ul>
+
+<h4>
+<a id="user-content-output-7" class="anchor" href="#output-7" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
+
+<div class="highlight highlight-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>degree<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>,
+  <span class="pl-s"><span class="pl-pds">"</span>similar<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>EveryoneThinksImWeirdBecause<span class="pl-pds">"</span></span>: <span class="pl-c1">1</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>HealthIT<span class="pl-pds">"</span></span>: <span class="pl-c1">1</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>Leadership<span class="pl-pds">"</span></span>: <span class="pl-c1">1</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>Mindfulness<span class="pl-pds">"</span></span>: <span class="pl-c1">1</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>healthcareinnovation<span class="pl-pds">"</span></span>: <span class="pl-c1">1</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>imaging<span class="pl-pds">"</span></span>: <span class="pl-c1">1</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>innovation<span class="pl-pds">"</span></span>: <span class="pl-c1">1</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>medical<span class="pl-pds">"</span></span>: <span class="pl-c1">1</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>radiology<span class="pl-pds">"</span></span>: <span class="pl-c1">1</span>
+  },
+  <span class="pl-s"><span class="pl-pds">"</span>topic<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>healthcare<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>tweet_references<span class="pl-pds">"</span></span>: <span class="pl-c1">7</span>,
+  <span class="pl-s"><span class="pl-pds">"</span>user_references<span class="pl-pds">"</span></span>: <span class="pl-c1">5</span>
 }</pre></div>
 
 <hr>
@@ -1515,7 +1434,7 @@ body .markdown-body
 <div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /users</span></pre></div>
 
 <h4>
-<a id="user-content-output-12" class="anchor" href="#output-12" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
+<a id="user-content-output-8" class="anchor" href="#output-8" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
 
 <div class="highlight highlight-json"><pre>{
     <span class="pl-s"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>21/01/2015<span class="pl-pds">"</span></span>,
@@ -1533,7 +1452,7 @@ body .markdown-body
 <div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /users/:user_id</span></pre></div>
 
 <h4>
-<a id="user-content-output-13" class="anchor" href="#output-13" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
+<a id="user-content-output-9" class="anchor" href="#output-9" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
 
 <div class="highlight highlight-json"><pre>{
     <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>mat<span class="pl-pds">"</span></span>,
@@ -1549,37 +1468,13 @@ body .markdown-body
       <span class="pl-s"><span class="pl-pds">"</span>average_subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>3<span class="pl-pds">"</span></span>,
     },
     <span class="pl-s"><span class="pl-pds">"</span>demographic<span class="pl-pds">"</span></span>:{
-        <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:{
+          <span class="pl-s"><span class="pl-pds">"</span>democrat<span class="pl-pds">"</span></span>:<span class="pl-c1">12</span>,
+          <span class="pl-s"><span class="pl-pds">"</span>republican<span class="pl-pds">"</span></span>:<span class="pl-c1">13</span>
+          },
         <span class="pl-s"><span class="pl-pds">"</span>languages<span class="pl-pds">"</span></span>:[<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>],
         <span class="pl-s"><span class="pl-pds">"</span>prefered_languge<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>en<span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>visitor<span class="pl-pds">"</span></span>:<span class="pl-c1">true</span>
     }
-}</pre></div>
-
-<h5>
-<a id="user-content--get-number-of-twitter-users-for-various-demographic-attributes" class="anchor" href="#-get-number-of-twitter-users-for-various-demographic-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<a name="user-content-social-demographics"></a> Get Number of Twitter Users for various demographic attributes.</h5>
-
-<div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /users/demographics</span></pre></div>
-
-<h5>
-<a id="user-content-input-params-3" class="anchor" href="#input-params-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Input Params</h5>
-
-<div class="highlight highlight-json"><pre>{
-    <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>democratic<span class="pl-pds">"</span></span>, <span class="pl-ii">//OPTIONAL</span>
-    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>zh<span class="pl-pds">"</span></span>, <span class="pl-ii">//OPTIONAL</span>
-    <span class="pl-s"><span class="pl-pds">"</span>visitor<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>, <span class="pl-ii">//OPTIONAL</span>
-    <span class="pl-s"><span class="pl-pds">"</span>mood<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>sad<span class="pl-pds">"</span></span> <span class="pl-ii">//OPTIONAL</span>
-}</pre></div>
-
-<p>Note: If all attributes are empty, simply return the total number of twitter users. </p>
-
-<h5>
-<a id="user-content-output-params" class="anchor" href="#output-params" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output Params</h5>
-
-<div class="highlight highlight-json"><pre>{
-    <span class="pl-s"><span class="pl-pds">"</span>number_of_matching_users<span class="pl-pds">"</span></span>: <span class="pl-c1">1278</span>,
-    <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>UTCTime<span class="pl-pds">"</span></span>
 }</pre></div>
 
 <h5>
@@ -1591,7 +1486,7 @@ body .markdown-body
 <div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /users/:user_id/connections?degree=1</span></pre></div>
 
 <h4>
-<a id="user-content-output-14" class="anchor" href="#output-14" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
+<a id="user-content-output-10" class="anchor" href="#output-10" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
 
 <div class="highlight highlight-json"><pre>{
     <span class="pl-s"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>21/01/2015<span class="pl-pds">"</span></span>,
@@ -1627,103 +1522,6 @@ body .markdown-body
     <span class="pl-s"><span class="pl-pds">"</span>degree_of_connectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>12<span class="pl-pds">"</span></span>
 }</pre></div>
 
-<h5>
-<a id="user-content--ask-about-the-top-10-affluent-twitter-users-in-the-region-ie-highest-follower-count" class="anchor" href="#-ask-about-the-top-10-affluent-twitter-users-in-the-region-ie-highest-follower-count" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<a name="user-content-social-affluence"></a> Ask about the top 10 affluent twitter users in the region (ie. highest follower count)</h5>
-
-<div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /users/affluent</span></pre></div>
-
-<h5>
-<a id="user-content-input-4" class="anchor" href="#input-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Input</h5>
-
-<div class="highlight highlight-json"><pre>{
-    <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>democratic<span class="pl-pds">"</span></span>, <span class="pl-ii">//OPTIONAL</span>
-    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>zh<span class="pl-pds">"</span></span>, <span class="pl-ii">//OPTIONAL</span>
-    <span class="pl-s"><span class="pl-pds">"</span>visitor<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>, <span class="pl-ii">//OPTIONAL</span>
-}</pre></div>
-
-<h5>
-<a id="user-content-output-15" class="anchor" href="#output-15" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h5>
-
-<div class="highlight highlight-json"><pre>{
-  <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>: {<span class="pl-ii">//DEFAULT</span> <span class="pl-ii">Twitter</span> <span class="pl-ii">User</span> <span class="pl-ii">Object</span>
-  },
-  <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>: {<span class="pl-ii">//DEFAULT</span> <span class="pl-ii">Twitter</span> <span class="pl-ii">User</span> <span class="pl-ii">Object</span>
-  }
-}</pre></div>
-
-<h5>
-<a id="user-content--ask-about-outward-engagement-summary-of-twitter-users-in-san-antonio" class="anchor" href="#-ask-about-outward-engagement-summary-of-twitter-users-in-san-antonio" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<a name="user-content-social-retweet"></a> Ask about outward engagement summary of twitter users in San Antonio</h5>
-
-<p>We want to figure out how engaging are tweets tweeted by SA residents and their perception by Twitter Users that do not reside in San Antonio. </p>
-
-<div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /social/outward</span></pre></div>
-
-<h4>
-<a id="user-content-output-16" class="anchor" href="#output-16" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
-
-<div class="highlight highlight-json"><pre>{
-  <span class="pl-s"><span class="pl-pds">"</span>avg_engagement_count<span class="pl-pds">"</span></span>: <span class="pl-c1">12</span>, <span class="pl-ii">//of</span> <span class="pl-ii">the</span> <span class="pl-ii">origin</span> <span class="pl-ii">tweet</span>
-  <span class="pl-s"><span class="pl-pds">"</span>engagement_sentiment<span class="pl-pds">"</span></span>: { <span class="pl-ii">//of</span> <span class="pl-ii">all</span> <span class="pl-ii">responding</span> <span class="pl-ii">tweets</span> <span class="pl-ii">to</span> <span class="pl-ii">the</span> <span class="pl-ii">origin</span> <span class="pl-ii">tweet</span>
-    <span class="pl-s"><span class="pl-pds">"</span>avg_polarity<span class="pl-pds">"</span></span>: <span class="pl-c1">0.212312</span>,
-    <span class="pl-s"><span class="pl-pds">"</span>avg_subjectivity<span class="pl-pds">"</span></span>: <span class="pl-c1">0.501021</span>
-  },
-  <span class="pl-s"><span class="pl-pds">"</span>origin_sentiment<span class="pl-pds">"</span></span>: { <span class="pl-ii">//of</span> <span class="pl-ii">all</span> <span class="pl-ii">origin</span> <span class="pl-ii">tweets</span> <span class="pl-ii">that</span> <span class="pl-ii">gained</span> <span class="pl-ii">engagement</span>
-    <span class="pl-s"><span class="pl-pds">"</span>avg_polarity<span class="pl-pds">"</span></span>: <span class="pl-c1">-0.912312</span>,
-    <span class="pl-s"><span class="pl-pds">"</span>avg_subjectivity<span class="pl-pds">"</span></span>: <span class="pl-c1">1</span>
-  },
-  <span class="pl-s"><span class="pl-pds">"</span>origin_user_stat<span class="pl-pds">"</span></span>: {
-    <span class="pl-s"><span class="pl-pds">"</span>followers_count<span class="pl-pds">"</span></span>: {
-      <span class="pl-s"><span class="pl-pds">"</span>lq<span class="pl-pds">"</span></span>: <span class="pl-c1">21</span>,
-      <span class="pl-s"><span class="pl-pds">"</span>median<span class="pl-pds">"</span></span>: <span class="pl-c1">30</span>,
-      <span class="pl-s"><span class="pl-pds">"</span>uq<span class="pl-pds">"</span></span>: <span class="pl-c1">40</span>,
-      <span class="pl-s"><span class="pl-pds">"</span>mean<span class="pl-pds">"</span></span>: <span class="pl-c1">34</span>
-    },
-    <span class="pl-s"><span class="pl-pds">"</span>locations<span class="pl-pds">"</span></span>: [
-      {<span class="pl-s"><span class="pl-pds">"</span>lat<span class="pl-pds">"</span></span>: <span class="pl-c1">12.1231232</span>, <span class="pl-s"><span class="pl-pds">"</span>lng<span class="pl-pds">"</span></span>: <span class="pl-c1">13.1231221</span>}
-    ] <span class="pl-ii">//</span> <span class="pl-ii">list</span> <span class="pl-ii">of</span> <span class="pl-ii">all</span> <span class="pl-ii">engaged</span> <span class="pl-ii">tweets</span> <span class="pl-ii">from</span> <span class="pl-ii">SA.</span> 
-  },
-  <span class="pl-s"><span class="pl-pds">"</span>outward_user_stat<span class="pl-pds">"</span></span>: {
-    <span class="pl-s"><span class="pl-pds">"</span>followers_count<span class="pl-pds">"</span></span>: {
-      <span class="pl-s"><span class="pl-pds">"</span>lq<span class="pl-pds">"</span></span>: <span class="pl-c1">100</span>,
-      <span class="pl-s"><span class="pl-pds">"</span>median<span class="pl-pds">"</span></span>: <span class="pl-c1">150</span>,
-      <span class="pl-s"><span class="pl-pds">"</span>uq<span class="pl-pds">"</span></span>: <span class="pl-c1">200</span>,
-      <span class="pl-s"><span class="pl-pds">"</span>mean<span class="pl-pds">"</span></span>: <span class="pl-c1">101</span>
-    }
-  }
-}</pre></div>
-
-<h5>
-<a id="user-content--ask-about-highest-retweets" class="anchor" href="#-ask-about-highest-retweets" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<a name="user-content-social-retweet"></a> Ask about highest retweets</h5>
-
-<div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /social/retweets</span></pre></div>
-
-<div class="highlight highlight-json"><pre>{
-  <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>: { <span class="pl-ii">//</span> <span class="pl-ii">0</span> <span class="pl-ii">~</span> <span class="pl-ii">10</span> <span class="pl-ii">Retweets</span>
-    <span class="pl-s"><span class="pl-pds">"</span>tweet<span class="pl-pds">"</span></span>: {
-      <span class="pl-s"><span class="pl-pds">"</span>hashtags<span class="pl-pds">"</span></span>: [
-        <span class="pl-s"><span class="pl-pds">"</span>#iloveguns<span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>#standyourground<span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>#saynotosmugglers<span class="pl-pds">"</span></span>
-      ],
-      <span class="pl-s"><span class="pl-pds">"</span>topic_mentions<span class="pl-pds">"</span></span>: [
-        <span class="pl-s"><span class="pl-pds">"</span>gun_control<span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>immigration<span class="pl-pds">"</span></span>
-      ],
-      <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>: <span class="pl-c1">0.5</span>,
-      <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>: <span class="pl-c1">1</span>,
-      <span class="pl-s"><span class="pl-pds">"</span>demographic<span class="pl-pds">"</span></span>:{
-        <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>languages<span class="pl-pds">"</span></span>:[<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>],
-        <span class="pl-s"><span class="pl-pds">"</span>prefered_languge<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>en<span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>visitor<span class="pl-pds">"</span></span>:<span class="pl-c1">true</span>
-      }
-    }
-  }
-}</pre></div>
-
 <hr>
 
 <h3>
@@ -1731,15 +1529,16 @@ body .markdown-body
 <a name="user-content-emoji"></a> Emoji Queries</h3>
 
 <h5>
-<a id="user-content-get-emojigeneraloutput--0--top-10-is-sufficient----emoji-️----count-1000----avg_subjectivity-05----avg_polarity-02----irony_detected-20-----1-----emoji-----count-500----avg_subjectivity-05----avg_polarity--09----irony_detected-50-----get-emoji-used-locationsget-emojiemoji_codelocationsoutput--lat-12123123---lng-23231232----lat-1232112---lng-2912312------get-emoji-affluenceget-emojiemoji_codeaffluenceoutput--emoji---insider-----count-1283-counts-how-many-tweets-were-mentioned-within-the-search-radius-----avg_polarity-05-----avg_subjectivity-02----mood-happy-----outsider-----count-1000000000----avg_polarity--02----avg_subjectivity-0----mood-sad----outreach_nodes-----count-29-counts-how-many-insider-tweets-were-retweeted----avg_spread-10000-counts-on-average-how-many-people-retweeted-the-insider-tweet-----avg_polarity-1----avg_subjectivity-0--tweet-data-structure--id-1239812093801298421--metadata-----result_type-recent----iso_language_code-ar----user_mentions-----------id-123123123------name-mat------screen_name-alskdjaslkdjlaksjd--------symbols---hashtags-----content----urls---text-blahlsdhalskdjalskdja-sdlkajs-dlkasj-dlaksjd-laskjd-aslkdj--lang-en--geo-----type-point----coordinates-------23123123------121231--------analysis-----language_features-------polarity-06------subjectivity-09------detected_language-en------english-alksdjalskdjlaksjd------ironic--true--------emojis-------text-------emoji_sentiment-happy--------topics-------meniton_immigration-true------mentions_gun_controler-true------unemploymenttrue------democratic_indicator-true------repulbican_indicatortrue------updated-tweet-data-structure--id-1239812093801298421--user-----id-134212421343214----screen_name-blaine----metadata-----result_type-recent----iso_language_code-ar----user_mentions-----------id-123123123------name-mat------screen_name-alskdjaslkdjlaksjd--------symbols---hashtags-----content----urls---text-blahlsdhalskdjalskdja-sdlkajs-dlkasj-dlaksjd-laskjd-aslkdj--lang-en--geo-----type-point----coordinates-------23123123------121231--------retweeted-true--analysis-----language_features-------polarity-06------subjectivity-09------detected_language-en------english-alksdjalskdjlaksjd------ironic--true--------emojis-------text-------emoji_sentiment-happy--------topics-------meniton_immigration-true------mentions_gun_controler-true------unemploymenttrue------democratic_indicator-true------repulbican_indicatortrue------" class="anchor" href="#get-emojigeneraloutput--0--top-10-is-sufficient----emoji-%EF%B8%8F----count-1000----avg_subjectivity-05----avg_polarity-02----irony_detected-20-----1-----emoji-----count-500----avg_subjectivity-05----avg_polarity--09----irony_detected-50-----get-emoji-used-locationsget-emojiemoji_codelocationsoutput--lat-12123123---lng-23231232----lat-1232112---lng-2912312------get-emoji-affluenceget-emojiemoji_codeaffluenceoutput--emoji---insider-----count-1283-counts-how-many-tweets-were-mentioned-within-the-search-radius-----avg_polarity-05-----avg_subjectivity-02----mood-happy-----outsider-----count-1000000000----avg_polarity--02----avg_subjectivity-0----mood-sad----outreach_nodes-----count-29-counts-how-many-insider-tweets-were-retweeted----avg_spread-10000-counts-on-average-how-many-people-retweeted-the-insider-tweet-----avg_polarity-1----avg_subjectivity-0--tweet-data-structure--id-1239812093801298421--metadata-----result_type-recent----iso_language_code-ar----user_mentions-----------id-123123123------name-mat------screen_name-alskdjaslkdjlaksjd--------symbols---hashtags-----content----urls---text-blahlsdhalskdjalskdja-sdlkajs-dlkasj-dlaksjd-laskjd-aslkdj--lang-en--geo-----type-point----coordinates-------23123123------121231--------analysis-----language_features-------polarity-06------subjectivity-09------detected_language-en------english-alksdjalskdjlaksjd------ironic--true--------emojis-------text-------emoji_sentiment-happy--------topics-------meniton_immigration-true------mentions_gun_controler-true------unemploymenttrue------democratic_indicator-true------repulbican_indicatortrue------updated-tweet-data-structure--id-1239812093801298421--user-----id-134212421343214----screen_name-blaine----metadata-----result_type-recent----iso_language_code-ar----user_mentions-----------id-123123123------name-mat------screen_name-alskdjaslkdjlaksjd--------symbols---hashtags-----content----urls---text-blahlsdhalskdjalskdja-sdlkajs-dlkasj-dlaksjd-laskjd-aslkdj--lang-en--geo-----type-point----coordinates-------23123123------121231--------retweeted-true--analysis-----language_features-------polarity-06------subjectivity-09------detected_language-en------english-alksdjalskdjlaksjd------ironic--true--------emojis-------text-------emoji_sentiment-happy--------topics-------meniton_immigration-true------mentions_gun_controler-true------unemploymenttrue------democratic_indicator-true------repulbican_indicatortrue------" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="user-content-emoji-summary&gt;&lt;/a&gt;Get%20General%20Information%20about%20Emoji%20Usage&lt;/h5&gt;%0A%0A&lt;pre%20lang="><code>GET /emoji/general
+<a id="user-content-get-emojigeneraloutput--0--top-10-is-sufficient----emoji-️----emoji_name--smiley----count-1000----avg_subjectivity-05----avg_polarity-02----irony_detected-20-----1-----emoji-----emoji_name--sadface----count-500----avg_subjectivity-05----avg_polarity--09----irony_detected-50-----get-emoji-used-locationsget-emojiemoji_namelocationsoutput-count--2--emoji_name-smile--emoji--locations-----lat-12123123-----lng-23231232--------lat-1232112-----lng-2912312--------tweet-data-structure--id-1239812093801298421--user-----id-134212421343214----screen_name-blaine----metadata-----result_type-recent----iso_language_code-ar----user_mentions-----------id-123123123------name-mat------screen_name-alskdjaslkdjlaksjd--------symbols---hashtags-----content----urls---text-blahlsdhalskdjalskdja-sdlkajs-dlkasj-dlaksjd-laskjd-aslkdj--lang-en--geo-----type-point----coordinates-------23123123------121231--------retweeted-true--analysis-----language_features-------polarity-06------subjectivity-09------detected_language-en------english-alksdjalskdjlaksjd------ironic--true--------emojis-------text-------emoji_sentiment-happy--------topics-------meniton_immigration-true------mentions_gun_controler-true------unemploymenttrue------democratic_indicator-true------repulbican_indicatortrue------" class="anchor" href="#get-emojigeneraloutput--0--top-10-is-sufficient----emoji-%EF%B8%8F----emoji_name--smiley----count-1000----avg_subjectivity-05----avg_polarity-02----irony_detected-20-----1-----emoji-----emoji_name--sadface----count-500----avg_subjectivity-05----avg_polarity--09----irony_detected-50-----get-emoji-used-locationsget-emojiemoji_namelocationsoutput-count--2--emoji_name-smile--emoji--locations-----lat-12123123-----lng-23231232--------lat-1232112-----lng-2912312--------tweet-data-structure--id-1239812093801298421--user-----id-134212421343214----screen_name-blaine----metadata-----result_type-recent----iso_language_code-ar----user_mentions-----------id-123123123------name-mat------screen_name-alskdjaslkdjlaksjd--------symbols---hashtags-----content----urls---text-blahlsdhalskdjalskdja-sdlkajs-dlkasj-dlaksjd-laskjd-aslkdj--lang-en--geo-----type-point----coordinates-------23123123------121231--------retweeted-true--analysis-----language_features-------polarity-06------subjectivity-09------detected_language-en------english-alksdjalskdjlaksjd------ironic--true--------emojis-------text-------emoji_sentiment-happy--------topics-------meniton_immigration-true------mentions_gun_controler-true------unemploymenttrue------democratic_indicator-true------repulbican_indicatortrue------" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="user-content-emoji-summary&gt;&lt;/a&gt;Get%20General%20Information%20about%20Emoji%20Usage&lt;/h5&gt;%0A%0A&lt;pre%20lang="><code>GET /emoji/general
 </code>
 
 <h4>
-<a id="user-content-output-17" class="anchor" href="#output-17" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
+<a id="user-content-output-11" class="anchor" href="#output-11" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
 
 <div class="highlight highlight-json"><pre>{
   <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>: { <span class="pl-ii">//Top</span> <span class="pl-ii">10</span> <span class="pl-ii">is</span> <span class="pl-ii">sufficient.</span>
     <span class="pl-s"><span class="pl-pds">"</span>emoji<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>☺️<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>emoji_name<span class="pl-pds">"</span></span> : <span class="pl-s"><span class="pl-pds">"</span>smiley<span class="pl-pds">"</span></span>,
     <span class="pl-s"><span class="pl-pds">"</span>count<span class="pl-pds">"</span></span>: <span class="pl-c1">1000</span>,
     <span class="pl-s"><span class="pl-pds">"</span>avg_subjectivity<span class="pl-pds">"</span></span>: <span class="pl-c1">0.5</span>,
     <span class="pl-s"><span class="pl-pds">"</span>avg_polarity<span class="pl-pds">"</span></span>: <span class="pl-c1">0.2</span>,
@@ -1747,7 +1546,8 @@ body .markdown-body
   }, 
   <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>: {
     <span class="pl-s"><span class="pl-pds">"</span>emoji<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>😡<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>count<span class="pl-pds">"</span></span>: <span class="pl-c1">500</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>emoji_name<span class="pl-pds">"</span></span> : <span class="pl-s"><span class="pl-pds">"</span>sadface<span class="pl-pds">"</span></span>
+    <span class="pl-s"><span class="pl-pds">"</span>count<span class="pl-pds">"</span></span><span class="pl-ii">:</span> <span class="pl-c1">500</span>,
     <span class="pl-s"><span class="pl-pds">"</span>avg_subjectivity<span class="pl-pds">"</span></span>: <span class="pl-c1">0.5</span>,
     <span class="pl-s"><span class="pl-pds">"</span>avg_polarity<span class="pl-pds">"</span></span>: <span class="pl-c1">-0.9</span>,
     <span class="pl-s"><span class="pl-pds">"</span>irony_detected<span class="pl-pds">"</span></span>: <span class="pl-c1">50</span>
@@ -1759,107 +1559,27 @@ body .markdown-body
 <a id="user-content--get-emoji-used-locations" class="anchor" href="#-get-emoji-used-locations" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 <a name="user-content-emoji-heatmap"></a> Get Emoji used locations</h5>
 
-<div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /emoji/:emoji_code/locations</span></pre></div>
+<div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /emoji/:emoji_name/locations</span></pre></div>
 
 <h4>
-<a id="user-content-output-18" class="anchor" href="#output-18" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
+<a id="user-content-output-12" class="anchor" href="#output-12" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
 
-<div class="highlight highlight-json"><pre>{<span class="pl-ii">[</span>
-  <span class="pl-ii">{</span><span class="pl-s"><span class="pl-pds">"</span>lat<span class="pl-pds">"</span></span>: <span class="pl-c1">12.123123</span>,
-   <span class="pl-s"><span class="pl-pds">"</span>lng<span class="pl-pds">"</span></span>: <span class="pl-c1">23.231232</span>
-  },
-  {<span class="pl-s"><span class="pl-pds">"</span>lat<span class="pl-pds">"</span></span>: <span class="pl-c1">12.32112</span>,
-   <span class="pl-s"><span class="pl-pds">"</span>lng<span class="pl-pds">"</span></span>: <span class="pl-c1">29.12312</span>
-  },
-  ...
-]} </pre></div>
-
-<h5>
-<a id="user-content--get-emoji-affluence" class="anchor" href="#-get-emoji-affluence" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<a name="user-content-emoji-affluence"></a> Get Emoji affluence</h5>
-
-<div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /emoji/:emoji_code/affluence</span></pre></div>
-
-<h4>
-<a id="user-content-output-19" class="anchor" href="#output-19" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
-
-<div class="highlight highlight-json"><pre>{
-  <span class="pl-s"><span class="pl-pds">"</span>emoji<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>😡<span class="pl-pds">"</span></span>,
-  <span class="pl-s"><span class="pl-pds">"</span>insider<span class="pl-pds">"</span></span>: {
-    <span class="pl-s"><span class="pl-pds">"</span>count<span class="pl-pds">"</span></span>: <span class="pl-c1">1283</span>, <span class="pl-ii">//counts</span> <span class="pl-ii">how</span> <span class="pl-ii">many</span> <span class="pl-ii">tweets</span> <span class="pl-ii">were</span> <span class="pl-ii">mentioned</span> <span class="pl-ii">within</span> <span class="pl-ii">the</span> <span class="pl-ii">search</span> <span class="pl-ii">radius.</span> 
-    <span class="pl-s"><span class="pl-pds">"</span>avg_polarity<span class="pl-pds">"</span></span>: <span class="pl-c1">0.5</span>, 
-    <span class="pl-s"><span class="pl-pds">"</span>avg_subjectivity<span class="pl-pds">"</span></span>: <span class="pl-c1">0.2</span>,
-    <span class="pl-s"><span class="pl-pds">"</span>mood<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>happy<span class="pl-pds">"</span></span> 
-  },
-  <span class="pl-s"><span class="pl-pds">"</span>outsider<span class="pl-pds">"</span></span>: {
-    <span class="pl-s"><span class="pl-pds">"</span>count<span class="pl-pds">"</span></span>: <span class="pl-c1">1000000000</span>,
-    <span class="pl-s"><span class="pl-pds">"</span>avg_polarity<span class="pl-pds">"</span></span>: <span class="pl-c1">-0.2</span>,
-    <span class="pl-s"><span class="pl-pds">"</span>avg_subjectivity<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>,
-    <span class="pl-s"><span class="pl-pds">"</span>mood<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>sad<span class="pl-pds">"</span></span>
-  },
-  <span class="pl-s"><span class="pl-pds">"</span>outreach_nodes<span class="pl-pds">"</span></span>: {
-    <span class="pl-s"><span class="pl-pds">"</span>count<span class="pl-pds">"</span></span>: <span class="pl-c1">29</span>, <span class="pl-ii">//counts</span> <span class="pl-ii">how</span> <span class="pl-ii">many</span> <span class="pl-ii">insider</span> <span class="pl-ii">tweets</span> <span class="pl-ii">were</span> <span class="pl-ii">retweeted.</span>
-    <span class="pl-s"><span class="pl-pds">"</span>avg_spread<span class="pl-pds">"</span></span>: <span class="pl-c1">10000</span>, <span class="pl-ii">//counts</span> <span class="pl-ii">on</span> <span class="pl-ii">average</span> <span class="pl-ii">how</span> <span class="pl-ii">many</span> <span class="pl-ii">people</span> <span class="pl-ii">retweeted</span> <span class="pl-ii">the</span> <span class="pl-ii">insider</span> <span class="pl-ii">tweet.</span> 
-    <span class="pl-s"><span class="pl-pds">"</span>avg_polarity<span class="pl-pds">"</span></span>: <span class="pl-c1">1</span>,
-    <span class="pl-s"><span class="pl-pds">"</span>avg_subjectivity<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>
-  }
-}</pre></div>
+<div class="highlight highlight-json"><pre>{ <span class="pl-s"><span class="pl-pds">"</span>count<span class="pl-pds">"</span></span> : <span class="pl-c1">2</span>,
+  <span class="pl-s"><span class="pl-pds">"</span>emoji_name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>smile<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>emoji<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>😄<span class="pl-pds">"</span></span>
+  <span class="pl-s"><span class="pl-pds">"</span>locations<span class="pl-pds">"</span></span><span class="pl-ii">:</span> [
+    {<span class="pl-s"><span class="pl-pds">"</span>lat<span class="pl-pds">"</span></span>: <span class="pl-c1">12.123123</span>,
+     <span class="pl-s"><span class="pl-pds">"</span>lng<span class="pl-pds">"</span></span>: <span class="pl-c1">23.231232</span>
+    },
+    {<span class="pl-s"><span class="pl-pds">"</span>lat<span class="pl-pds">"</span></span>: <span class="pl-c1">12.32112</span>,
+     <span class="pl-s"><span class="pl-pds">"</span>lng<span class="pl-pds">"</span></span>: <span class="pl-c1">29.12312</span>
+    }
+  ]
+} </pre></div>
 
 <h3>
-<a id="user-content-tweet-data-structure" class="anchor" href="#tweet-data-structure" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tweet Data Structure</h3>
-
-<div class="highlight highlight-json"><pre>{
-  <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1239812093801298421<span class="pl-pds">"</span></span>,
-  <span class="pl-s"><span class="pl-pds">"</span>metadata<span class="pl-pds">"</span></span>: {
-    <span class="pl-s"><span class="pl-pds">"</span>result_type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>recent<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>iso_language_code<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>ar<span class="pl-pds">"</span></span>
-  },
-  <span class="pl-s"><span class="pl-pds">"</span>user_mentions<span class="pl-pds">"</span></span>: [
-    {
-      <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>123123123<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Mat<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>screen_name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>alskdjaslkdjlaksjd<span class="pl-pds">"</span></span>
-    }
-  ],
-  <span class="pl-s"><span class="pl-pds">"</span>symbols<span class="pl-pds">"</span></span>: [],
-  <span class="pl-s"><span class="pl-pds">"</span>hashtags<span class="pl-pds">"</span></span>: [
-    <span class="pl-s"><span class="pl-pds">"</span>content<span class="pl-pds">"</span></span>
-  ],
-  <span class="pl-s"><span class="pl-pds">"</span>urls<span class="pl-pds">"</span></span>: [],
-  <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>blahlsdhalskdjalskdja sdlkajs dlkasj dlaksjd laskjd aslkdj<span class="pl-pds">"</span></span>,
-  <span class="pl-s"><span class="pl-pds">"</span>lang<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en<span class="pl-pds">"</span></span>,
-  <span class="pl-s"><span class="pl-pds">"</span>geo<span class="pl-pds">"</span></span>: {
-    <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>point<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>coordinates<span class="pl-pds">"</span></span>: [
-      <span class="pl-s"><span class="pl-pds">"</span>23.123123<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>12.1231<span class="pl-pds">"</span></span>
-    ]
-  },
-  <span class="pl-s"><span class="pl-pds">"</span>analysis<span class="pl-pds">"</span></span>: {
-    <span class="pl-s"><span class="pl-pds">"</span>language_features<span class="pl-pds">"</span></span>: {
-      <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>0.6<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>0.9<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>detected_language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>english<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>alksdjalskdjlaksjd<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>ironic<span class="pl-pds">"</span></span> : <span class="pl-c1">true</span>
-    },
-    <span class="pl-s"><span class="pl-pds">"</span>emojis<span class="pl-pds">"</span></span>: {
-      <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>:):(<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>emoji_sentiment<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>happy<span class="pl-pds">"</span></span>
-    },
-    <span class="pl-s"><span class="pl-pds">"</span>topics<span class="pl-pds">"</span></span>: {
-      <span class="pl-s"><span class="pl-pds">"</span>meniton_immigration<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-      <span class="pl-s"><span class="pl-pds">"</span>mentions_gun_controler<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-      <span class="pl-s"><span class="pl-pds">"</span>unemployment<span class="pl-pds">"</span></span>:<span class="pl-c1">true</span>,
-      <span class="pl-s"><span class="pl-pds">"</span>democratic_indicator<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-      <span class="pl-s"><span class="pl-pds">"</span>repulbican_indicator<span class="pl-pds">"</span></span>:<span class="pl-c1">true</span>
-    }
-  }
-}</pre></div>
-
-<h3>
-<a id="user-content-updated-tweet-data-structure" class="anchor" href="#updated-tweet-data-structure" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<a name="user-content-tweet"></a>Updated! Tweet Data Structure</h3>
+<a id="user-content--tweet-data-structure" class="anchor" href="#-tweet-data-structure" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+<a name="user-content-tweet"></a> Tweet Data Structure</h3>
 
 <div class="highlight highlight-json"><pre>{
   <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1239812093801298421<span class="pl-pds">"</span></span>,
