@@ -15,7 +15,7 @@ class LocationsController < ApplicationController
     # Find required date
     if ! @date_range
       # Find the period
-      date_range = {"start_date" =>100.years.ago.to_s,
+      @date_range = {"start_date" =>100.years.ago.to_s,
                     "end_date" => Date.today.to_s }
     end
     # Find limit if specified
@@ -25,10 +25,10 @@ class LocationsController < ApplicationController
     period = params.has_key?('period') ? params[:period] : nil
 
     # Make couch request for sentiment
-    analysis = Locations.sentiment_in start_loc, end_loc, start_date, end_date, period, @demographic, limit
+    analysis = Locations.sentiment_in start_loc, end_loc, @date_range['start_date'], @date_range['end_date'], period, @demographic, limit
 
     # Render json
-    render json: sentiment_json(start_loc, end_loc, start_date, end_date, analysis, period)
+    render json: sentiment_json(start_loc, end_loc, @date_range['start_date'], @date_range['end_date'], analysis, period)
   end
 
   def index
