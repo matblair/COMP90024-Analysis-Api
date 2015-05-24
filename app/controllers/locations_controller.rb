@@ -26,7 +26,7 @@ class LocationsController < ApplicationController
 
     # Make couch request for sentiment
     analysis = Locations.sentiment_in start_loc, end_loc, @date_range['start_date'], @date_range['end_date'], period, @demographic, limit
-
+    
     # Render json
     render json: sentiment_json(start_loc, end_loc, @date_range['start_date'], @date_range['end_date'], analysis, period)
   end

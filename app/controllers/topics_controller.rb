@@ -18,10 +18,12 @@ class TopicsController < ApplicationController
   def show
     # Get couch request
     sentiment = Topics.get_topic @topic, @demographic, @date_range
+
     # Get languages unless searching for a particular one
     if not (@demographic.has_key? 'language')
       languages = Topics.get_languages @topic
     else
+
       languages = nil
     end
     

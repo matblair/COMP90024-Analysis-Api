@@ -16,6 +16,9 @@ class Topics
       if demographic.has_key?('political_leaning')
         startkey, endkey = build_sentiment_keys topic, start_date, end_date, demographic
         response = (Couchdb.make_request 'tweets', 'topic', 'analysis', {'startkey'=>startkey, 'endkey'=>endkey})['rows']
+      elsif demographic.has_key?('language')
+        startkey, endkey = build_lang_keys topic, start_date, end_date, demographic
+        response = (Couchdb.make_request 'tweets', 'topic', 'analysis_lang_only', {'startkey'=>startkey, 'endkey'=>endkey})['rows']
       else
         startkey, endkey = build_date_keys topic, start_date, end_date, demographic
         response = (Couchdb.make_request 'tweets', 'topic', 'analysis_bydate', {'startkey'=>startkey, 'endkey'=>endkey})['rows']
@@ -118,6 +121,40 @@ class Topics
         endkey << {}
       end
     end
+
+    [startkey, endkey]
+  end
+
+
+  def self.build_lang_keys topic, start_date, end_date, demographic=nil
+    # Build start and end key
+    startkey = [topic]
+    endkey = [topic]
+
+    # Add demographic markers
+    if demographic
+      if demographic.has_key? "language"
+        startkey << demographic["language"]
+        endkey << demographic["language"]
+      else
+        startkey << "a"
+        endkey << {}
+      end
+    end
+
+    startkey = startkey.concat start_date
+    endkey = endkey.concat end_date
+
+    # Add demographic markers
+        if demographic
+      if demographic.has_key? "political_leaning"
+        startkey << demographic["political_leaning"]
+        endkey << demographic["political_leaning"]
+      else
+        endkey << {}
+      end
+    end
+
 
     [startkey, endkey]
   end
