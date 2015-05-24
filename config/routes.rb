@@ -3,11 +3,6 @@ Rails.application.routes.draw do
   get 'info/index'
   root 'info#index'
 
-  # Routes for users
-  get 'users' => 'users#index'
-  get 'users/:user_id' => 'users#show'
-  get 'users/:user_id/connections' => 'users#connections'
-
   # Routes for hashtags
   get 'hashtags/trending' => 'hashtags#trending'
   get 'hashtags/stats/:hashtag' => 'hashtags#show'
@@ -29,4 +24,10 @@ Rails.application.routes.draw do
   get '/emoji/general' => 'emojis#top_ten'
   get '/emoji/:emoji_code/locations' => 'emojis#location'
 
+  # Routes for users
+  # get 'users' => 'users#index'
+  # get 'users/:user_id' => 'users#show'
+  # get 'users/:user_id/connections' => 'users#connections'
+  get ':error' => 'info#error'
+  
 end
