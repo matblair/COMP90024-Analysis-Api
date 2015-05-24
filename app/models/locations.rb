@@ -1,9 +1,9 @@
-class Locations 
+class Locations
 
 
   def self.where date, demographic=nil, period= nil, limit=nil
     # Build the keys
-    startkey, endkey = build_index_location_keys date, period, demographic 
+    startkey, endkey = build_index_location_keys date, period, demographic
     # Make the request
     r = (Couchdb.make_request 'tweets', 'location','sentiment_bydate', {'startkey'=>startkey, 'endkey'=>endkey,'group'=>true, 'group_level'=>9, 'limit'=>(limit ? limit : 5000)})['rows']
   end
@@ -46,11 +46,11 @@ class Locations
     # Work out times
     if period
       start_time, end_time = period.split(" - ")
-      start_date = parse_date("#{date} #{start_time}")
-      end_date = parse_date("#{date} #{end_time}")
+      start_date = parse_date("#{date.to_date} #{start_time}")
+      end_date = parse_date("#{date.to_date} #{end_time}")
     else
-      start_date = parse_date("#{date} 0:00am")
-      end_date = parse_date("#{date} 11:59pm")
+      start_date = parse_date("#{date.to_date} 0:00am")
+      end_date = parse_date("#{date.to_date} 11:59pm")
     end
 
     # Add them to the keys
@@ -74,14 +74,16 @@ class Locations
       #Check languages
       if demo.has_key? 'language'
         startkey << demo['language']
+        endkey << demo['language']
+      else
+        endkey << {}
       end
-      endkey << {}
     end
 
     [startkey, endkey]
   end
 
-    def self.build_sentiment_location_keys start_loc, end_loc, start_date, end_date, period, demo
+  def self.build_sentiment_location_keys start_loc, end_loc, start_date, end_date, period, demo
     # Pattern is
     # [lat, lon, leaning, lang, year, day, month, hour, minute]
     startkey = []
@@ -90,11 +92,11 @@ class Locations
     # Work out times
     if period
       start_time, end_time = period.split(" - ")
-      start_date = parse_date("#{start_date} #{start_time}")
-      end_date = parse_date("#{end_date} #{end_time}")
+      start_date = parse_date("#{start_date.to_date} #{start_time}")
+      end_date = parse_date("#{end_date.to_date} #{end_time}")
     else
-      start_date = parse_date("#{start_date} 0:00am")
-      end_date = parse_date("#{end_date} 11:59pm")
+      start_date = parse_date("#{start_date.to_date} 0:00am")
+      end_date = parse_date("#{end_date.to_date} 11:59pm")
     end
 
     # Add them to the keys

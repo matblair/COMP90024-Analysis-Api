@@ -17,6 +17,13 @@ class DateMagic
     (time + 6.hours)
   end
 
+ def self.utc_time_from_str time
+    d = ActiveSupport::TimeZone.new('Central Time (US & Canada)').parse(time)
+    zone = "Central Time (US & Canada)"  
+    d = ActiveSupport::TimeZone[zone].parse(d.to_s)
+    d.in_time_zone("UTC")
+  end
+
   def self.sa_to_utc_string string
     zone = "Central Time (US & Canada)"  
     d = ActiveSupport::TimeZone[zone].parse(string)
