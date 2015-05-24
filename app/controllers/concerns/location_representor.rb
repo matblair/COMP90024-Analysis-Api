@@ -28,8 +28,8 @@ module LocationRepresentor
 		response = {
 			start_lat:  start_loc[0],
 			start_lon:  start_loc[1],
-			end_lat:    start_loc[0],
-		    end_lon:    start_loc[1],
+			end_lat:    end_loc[0],
+		    end_lon:    end_loc[1],
 		    start_date: start_date,
 			end_date: 	end_date,
 			sentiment:  analysis
