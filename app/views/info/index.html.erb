@@ -898,16 +898,6 @@ body .markdown-body
 </ol>
 </li>
 <li>
-<a href="#social">Social Network</a>
-
-<ol>
-<li><a href="#social-users">Provide general information about the social graph</a></li>
-<li><a href="#social-user">Ask about a user</a></li>
-<li><a href="#social-demographics">Get Twitter Users for various demographic attributes</a></li>
-<li><a href="#social-friends">Ask about the users particular friends</a></li>
-</ol>
-</li>
-<li>
 <a href="#emoji">Emoji</a>
 
 <ol>
@@ -1296,34 +1286,38 @@ body .markdown-body
 
 <div class="highlight highlight-json"><pre>{
   <span class="pl-s"><span class="pl-pds">"</span>time_periods<span class="pl-pds">"</span></span> : {
-    <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>00<span class="pl-pds">"</span></span>: {
       <span class="pl-s"><span class="pl-pds">"</span>start_date<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>15/4/2015<span class="pl-pds">"</span></span>,
       <span class="pl-s"><span class="pl-pds">"</span>end_date<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>20/4/2015<span class="pl-pds">"</span></span>,
       <span class="pl-s"><span class="pl-pds">"</span>trending<span class="pl-pds">"</span></span>:{
         <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>:{
             <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>ILoveHaskell<span class="pl-pds">"</span></span>,
             <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.9<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>count<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>10<span class="pl-pds">"</span></span>,
             <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.1<span class="pl-pds">"</span></span>
         },
         <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>:{
             <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>HaskellSucksMonkeyBalls<span class="pl-pds">"</span></span>,
             <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.9<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>count<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>10<span class="pl-pds">"</span></span>,
             <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.1<span class="pl-pds">"</span></span>
         } <span class="pl-ii">//</span><span class="pl-c1">10</span> <span class="pl-ii">of</span> <span class="pl-ii">these</span> <span class="pl-ii">for</span> <span class="pl-ii">each</span> <span class="pl-ii">period.</span>
       }
     },
-    <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>: 
+    <span class="pl-s"><span class="pl-pds">"</span>01<span class="pl-pds">"</span></span>: 
       <span class="pl-s"><span class="pl-pds">"</span>start_date<span class="pl-pds">"</span></span><span class="pl-ii">:</span> <span class="pl-s"><span class="pl-pds">"</span>15/4/2015<span class="pl-pds">"</span></span>,
       <span class="pl-s"><span class="pl-pds">"</span>end_date<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>20/4/2015<span class="pl-pds">"</span></span>,
       <span class="pl-s"><span class="pl-pds">"</span>trending<span class="pl-pds">"</span></span>:{
         <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>:{
             <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>TechiesBOOM<span class="pl-pds">"</span></span>,
             <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.9<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>count<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>10<span class="pl-pds">"</span></span>,
             <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.1<span class="pl-pds">"</span></span>
         },
         <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>:{
             <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>PudgeHook<span class="pl-pds">"</span></span>,
             <span class="pl-s"><span class="pl-pds">"</span>polarity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>-1<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>count<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>10<span class="pl-pds">"</span></span>,
             <span class="pl-s"><span class="pl-pds">"</span>subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>
         } <span class="pl-ii">//</span><span class="pl-c1">10</span> <span class="pl-ii">of</span> <span class="pl-ii">these</span> <span class="pl-ii">for</span> <span class="pl-ii">each</span> <span class="pl-ii">period.</span>
       }
@@ -1424,107 +1418,6 @@ body .markdown-body
 <hr>
 
 <h3>
-<a id="user-content-social-network-queries" class="anchor" href="#social-network-queries" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<a name="user-content-social"></a>Social Network Queries</h3>
-
-<h5>
-<a id="user-content-provide-general-information-about-the-social-graph" class="anchor" href="#provide-general-information-about-the-social-graph" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<a name="user-content-social-users"></a>Provide general information about the social graph</h5>
-
-<div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /users</span></pre></div>
-
-<h4>
-<a id="user-content-output-8" class="anchor" href="#output-8" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
-
-<div class="highlight highlight-json"><pre>{
-    <span class="pl-s"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>21/01/2015<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>12:39PM<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>activity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>12<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>connectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>12<span class="pl-pds">"</span></span>
-}</pre></div>
-
-<h5>
-<a id="user-content--ask-about-a-user" class="anchor" href="#-ask-about-a-user" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<a name="user-content-social-user"></a> Ask about a user</h5>
-
-<p>Provide general information about the social graph</p>
-
-<div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /users/:user_id</span></pre></div>
-
-<h4>
-<a id="user-content-output-9" class="anchor" href="#output-9" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
-
-<div class="highlight highlight-json"><pre>{
-    <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>mat<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>username<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>matthefantastic<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>basic_stats<span class="pl-pds">"</span></span>:{
-      <span class="pl-s"><span class="pl-pds">"</span>number_of_tweets<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>3<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>num_followers<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>2<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>talker<span class="pl-pds">"</span></span>:<span class="pl-c1">true</span>,
-      <span class="pl-s"><span class="pl-pds">"</span>degree_of_connectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>12<span class="pl-pds">"</span></span>
-    },
-    <span class="pl-s"><span class="pl-pds">"</span>sentiment<span class="pl-pds">"</span></span>:{
-      <span class="pl-s"><span class="pl-pds">"</span>average_polarity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>2<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>average_subjectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>3<span class="pl-pds">"</span></span>,
-    },
-    <span class="pl-s"><span class="pl-pds">"</span>demographic<span class="pl-pds">"</span></span>:{
-        <span class="pl-s"><span class="pl-pds">"</span>politcal_leaning<span class="pl-pds">"</span></span>:{
-          <span class="pl-s"><span class="pl-pds">"</span>democrat<span class="pl-pds">"</span></span>:<span class="pl-c1">12</span>,
-          <span class="pl-s"><span class="pl-pds">"</span>republican<span class="pl-pds">"</span></span>:<span class="pl-c1">13</span>
-          },
-        <span class="pl-s"><span class="pl-pds">"</span>languages<span class="pl-pds">"</span></span>:[<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>],
-        <span class="pl-s"><span class="pl-pds">"</span>prefered_languge<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>en<span class="pl-pds">"</span></span>,
-    }
-}</pre></div>
-
-<h5>
-<a id="user-content--ask-about-the-users-particular-friends" class="anchor" href="#-ask-about-the-users-particular-friends" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<a name="user-content-social-friends"></a> Ask about the users particular friends</h5>
-
-<p>Provide general information about the social graph</p>
-
-<div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /users/:user_id/connections?degree=1</span></pre></div>
-
-<h4>
-<a id="user-content-output-10" class="anchor" href="#output-10" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
-
-<div class="highlight highlight-json"><pre>{
-    <span class="pl-s"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>21/01/2015<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>12:39PM<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>user<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>user_id<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>connections<span class="pl-pds">"</span></span>:{
-      <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>:[{
-          <span class="pl-s"><span class="pl-pds">"</span>user<span class="pl-pds">"</span></span>:{
-            <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>asdkljalskdja<span class="pl-pds">"</span></span>,
-            <span class="pl-s"><span class="pl-pds">"</span>user_id<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>,
-            <span class="pl-s"><span class="pl-pds">"</span>num_connections<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>
-          },
-          <span class="pl-s"><span class="pl-pds">"</span>demographic<span class="pl-pds">"</span></span>:{
-
-            },
-          <span class="pl-s"><span class="pl-pds">"</span>subjectivty<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.9<span class="pl-pds">"</span></span>,
-          <span class="pl-s"><span class="pl-pds">"</span>sentiment<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.1<span class="pl-pds">"</span></span>
-      }],
-      <span class="pl-s"><span class="pl-pds">"</span>2<span class="pl-pds">"</span></span>:[{
-          <span class="pl-s"><span class="pl-pds">"</span>user<span class="pl-pds">"</span></span>:{
-            <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>asdkljalskdja<span class="pl-pds">"</span></span>,
-            <span class="pl-s"><span class="pl-pds">"</span>user_id<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>,
-            <span class="pl-s"><span class="pl-pds">"</span>num_connections<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>
-          },
-          <span class="pl-s"><span class="pl-pds">"</span>demographic<span class="pl-pds">"</span></span>:{
-
-          },
-          <span class="pl-s"><span class="pl-pds">"</span>subjectivty<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.9<span class="pl-pds">"</span></span>,
-          <span class="pl-s"><span class="pl-pds">"</span>sentiment<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>0.1<span class="pl-pds">"</span></span>
-      }]
-    },
-    <span class="pl-s"><span class="pl-pds">"</span>num_connections<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>degree_of_connectivity<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>12<span class="pl-pds">"</span></span>
-}</pre></div>
-
-<hr>
-
-<h3>
 <a id="user-content--emoji-queries" class="anchor" href="#-emoji-queries" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 <a name="user-content-emoji"></a> Emoji Queries</h3>
 
@@ -1533,7 +1426,7 @@ body .markdown-body
 </code>
 
 <h4>
-<a id="user-content-output-11" class="anchor" href="#output-11" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
+<a id="user-content-output-8" class="anchor" href="#output-8" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
 
 <div class="highlight highlight-json"><pre>{
   <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>: { <span class="pl-ii">//Top</span> <span class="pl-ii">10</span> <span class="pl-ii">is</span> <span class="pl-ii">sufficient.</span>
@@ -1562,7 +1455,7 @@ body .markdown-body
 <div class="highlight highlight-http"><pre><span class="pl-k">GET</span><span class="pl-c1"> /emoji/:emoji_name/locations</span></pre></div>
 
 <h4>
-<a id="user-content-output-12" class="anchor" href="#output-12" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
+<a id="user-content-output-9" class="anchor" href="#output-9" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h4>
 
 <div class="highlight highlight-json"><pre>{ <span class="pl-s"><span class="pl-pds">"</span>count<span class="pl-pds">"</span></span> : <span class="pl-c1">2</span>,
   <span class="pl-s"><span class="pl-pds">"</span>emoji_name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>smile<span class="pl-pds">"</span></span>,
