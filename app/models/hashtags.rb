@@ -16,7 +16,7 @@ class Hashtags
       # Find the start and end key
       startkey, endkey = build_date_keys start_date, end_date, demographic
       response = (Couchdb.make_request 'tweets', 'hashtag', 'stats_bydate',
-                  {'startkey'=>startkey, 'endkey'=>endkey, 'group'=>true, 'group_level'=>10, 'limit'=>10})['rows']
+                  {'startkey'=>startkey, 'endkey'=>endkey, 'group'=>true, 'group_level'=>10})['rows']
       # Put them all in tag_counts
       if response
         response.each do |r|
@@ -70,7 +70,7 @@ class Hashtags
   end
 
   def self.topics frequency=false
-    topics = (Couchdb.make_request 'tweets', 'hashtag', 'stats', {'group'=>true, 'group_level'=>2, 'limit'=>5000})['rows']
+    topics = (Couchdb.make_request 'tweets', 'hashtag', 'stats', {'group'=>true, 'group_level'=>2})['rows']
     # Go Through and Build Hash
     temp = {}
     topics.each do |topic|
